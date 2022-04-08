@@ -30,32 +30,24 @@ class ViewController: UIViewController {
         allCollectionView.dataSource = self
         allCollectionView.register(UINib(nibName: String(describing: PockemonCellCollectionViewCell.self), bundle: nil), forCellWithReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self))
         
-        let favoriteLabel = UILabel()
-        favoriteLabel.text = "Favorite"
-        contentScrollView.addSubview(favoriteLabel)
-        let allLabel = UILabel()
-        allLabel.text = "All"
-        contentScrollView.addSubview(allLabel)
-        
-        let networkManager = NetworkManager()
-        var pokemonCount = networkManager.getPokemonCount()
-        DispatchQueue.global(qos: .userInitiated).async {
-            while pokemonCount == 0 {
-                pokemonCount = networkManager.totalPokemonCount
+        loadData()
+    }
+    
+    private func loadData() {
+        DispatchQueue.global(qos: .utility).async {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            while self.isLoaded == false {
+                self.isLoaded = appDelegate.isLoaded
             }
-            networkManager.getAllPokemons(totalPokemonCount: pokemonCount)
-            while networkManager.isReady == false {
-                self.pokemons = networkManager.pokemons
-            }
+            self.pokemons = appDelegate.pokemons
             DispatchQueue.main.async {
                 self.allCollectionView.indexPathsForVisibleItems.forEach {
-                    if let cell = self.allCollectionView.cellForItem(at: $0) as? PockemonCellCollectionViewCell {
-                        if let imagePath = self.pokemons[$0.row].frontSideImagePath,
-                           let pokemonName = self.pokemons[$0.row].name {
-                            cell.configureCell(viewModel: PokemonCellViewModel(name: pokemonName, isFavorite: false, imagePath: imagePath))
-                            self.isLoaded = true
-                            self.allCollectionView.reloadData()
-                        }
+                    if let cell = self.allCollectionView.cellForItem(at: $0) as? PockemonCellCollectionViewCell,
+                       let imagePath = self.pokemons[$0.row].frontSideImagePath,
+                       let pokemonName = self.pokemons[$0.row].name {
+                        cell.configureCell(viewModel: PokemonCellViewModel(name: pokemonName, isFavorite: false, imagePath: imagePath))
+                        self.isLoaded = true
+                        self.allCollectionView.reloadData()
                     }
                 }
             }

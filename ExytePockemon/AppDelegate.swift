@@ -10,10 +10,28 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    private(set) var pokemons: [Pokemon] = []
+    
+    private(set) var isLoaded = false
+    
+    private func loadData() {
+        let networkManager = NetworkManager()
+        var pokemonCount = networkManager.getPokemonCount()
+        DispatchQueue.global(qos: .utility).async {
+            while pokemonCount == 0 {
+                pokemonCount = networkManager.totalPokemonCount
+            }
+            networkManager.getAllPokemons(totalPokemonCount: pokemonCount)
+            while networkManager.isReady == false {
+                self.pokemons = networkManager.pokemons
+            }
+            self.isLoaded = true
+        }
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        self.loadData()
         return true
     }
 

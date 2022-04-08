@@ -33,11 +33,14 @@ public class NetworkManager {
     public func getAllPokemons(totalPokemonCount: Int) {
         DispatchQueue.global(qos: .userInitiated).async {
             var iteration = 0
+            let downloadGroup = DispatchGroup()
             for i in 0...totalPokemonCount {
+                downloadGroup.enter()
                 PokemonAPI().pokemonService.fetchPokemon(i) { result in
                     switch result {
                     case .success(let pokemonResult):
                         iteration += 1
+                        downloadGroup.leave()
                         let pokemon = Pokemon()
                         pokemon.name = pokemonResult.name
                         pokemon.weight = pokemonResult.weight
@@ -67,6 +70,7 @@ public class NetworkManager {
                     }
                 }
             }
+            downloadGroup.wait()
         }
     }
 }
