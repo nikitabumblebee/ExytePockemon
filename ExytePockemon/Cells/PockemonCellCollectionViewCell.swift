@@ -17,6 +17,8 @@ class PockemonCellCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
+    private var viewModel: PokemonCellViewModel?
+    
     @IBOutlet weak var pockemonImage: UIImageView!
     @IBOutlet weak var pockemonName: UILabel!
     @IBOutlet weak var favoriteStatusButton: UIButton!
@@ -40,13 +42,14 @@ class PockemonCellCollectionViewCell: UICollectionViewCell {
                                      photo.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -100)])
     }
 
-    func configureCell(viewModel: PockemonCellViewModel) {
+    func configureCell(viewModel: PokemonCellViewModel) {
+        self.viewModel = viewModel
         self.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
         self.layer.borderWidth = CGFloat(1)
         self.layer.cornerRadius = CGFloat(8)
         pockemonName.text = viewModel.name
         favoriteStatusButton.titleLabel?.text = viewModel.isFavoriteStatus ? "DISLIKE" : "LIKE"
-        viewModel.downloadImage { [weak self] image in
+        viewModel.downloadImage(imagePath: viewModel.imagePath) { [weak self] image in
             DispatchQueue.main.async {
                 self?.photo.image = image
             }

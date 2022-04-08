@@ -8,14 +8,14 @@
 import Foundation
 import UIKit
 
-class PockemonCellViewModel {
+class PokemonCellViewModel {
     private var cachedImage: UIImage?
     private var isDownloading = false
     private var callback: ((UIImage?) -> Void)?
     
     var name: String
     var isFavoriteStatus: Bool
-    var imagePath: String
+    var imagePath: String = "https://www.forksoverknives.com/wp-content/uploads/fly-images/159962/Middle-Eastern-Pita-Pocket-Sandwiches-wordpress-360x270-c.jpg"
     
     init(name: String, isFavorite: Bool, imagePath: String) {
         self.name = name
@@ -23,7 +23,7 @@ class PockemonCellViewModel {
         self.imagePath = imagePath
     }
     
-    func downloadImage(completion: ((UIImage?) -> Void)?) {
+    func downloadImage(imagePath: String = "https://www.forksoverknives.com/wp-content/uploads/fly-images/159962/Middle-Eastern-Pita-Pocket-Sandwiches-wordpress-360x270-c.jpg", completion: ((UIImage?) -> Void)?) {
         if let image = cachedImage {
             completion?(image)
             return
@@ -36,7 +36,7 @@ class PockemonCellViewModel {
         
         isDownloading = true
         
-        guard let url = URL(string: "https://www.forksoverknives.com/wp-content/uploads/fly-images/159962/Middle-Eastern-Pita-Pocket-Sandwiches-wordpress-360x270-c.jpg") else { return }
+        guard let url = URL(string: imagePath) else { return }
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
             guard let data = data else { return }
             DispatchQueue.main.async {

@@ -33,8 +33,29 @@ class ViewController: UIViewController {
         allLabel.text = "All"
         contentScrollView.addSubview(allLabel)
         
-        let a = NetworkManager()
-        a.createApiCall()
+        let networkManager = NetworkManager()
+        var pokemonCount = networkManager.getPokemonCount()
+        var pokemonCollection: [Pokemon] = []
+        DispatchQueue.global(qos: .userInitiated).async {
+            while pokemonCount == 0 {
+                pokemonCount = networkManager.totalPokemonCount
+            }
+            networkManager.getAllPokemons(totalPokemonCount: pokemonCount)
+            while networkManager.isReady == false {
+                pokemonCollection = networkManager.pokemons
+            }
+            DispatchQueue.main.async {
+                self.allCollectionView.indexPathsForVisibleItems.forEach {
+                    if let cell = self.allCollectionView.cellForItem(at: $0) as? PockemonCellCollectionViewCell {
+                        if let imagePath = pokemonCollection[$0.row].frontSideImagePath,
+                           let pokemonName = pokemonCollection[$0.row].name {
+                            cell.configureCell(viewModel: PokemonCellViewModel(name: pokemonName, isFavorite: false, imagePath: imagePath))
+                        }
+                    }
+                }
+                
+            }
+        }
     }
 }
 
@@ -54,13 +75,13 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.favoriteCollectionView {
             let cell = favoriteCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
-            cell.configureCell(viewModel: PockemonCellViewModel(name: "123", isFavorite: true, imagePath: ""))
+            cell.configureCell(viewModel: PokemonCellViewModel(name: "123", isFavorite: true, imagePath: ""))
             
             return cell
         }
         else {
             let cell = favoriteCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
-            cell.configureCell(viewModel: PockemonCellViewModel(name: "!!!!", isFavorite: true, imagePath: ""))
+            cell.configureCell(viewModel: PokemonCellViewModel(name: "!!!!", isFavorite: true, imagePath: ""))
             
             return cell
         }
