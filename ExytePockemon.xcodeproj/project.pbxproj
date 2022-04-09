@@ -27,6 +27,7 @@
 		5E278FDF280126B00052EA64 /* InternetReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E278FDE280126B00052EA64 /* InternetReachability.swift */; };
 		5E278FE228012BC60052EA64 /* PokemonModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5E278FE028012BC50052EA64 /* PokemonModel.xcdatamodeld */; };
 		5E278FE528012F030052EA64 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E278FE428012F030052EA64 /* DBManager.swift */; };
+		5E278FE828014A710052EA64 /* PokemonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E278FE728014A710052EA64 /* PokemonHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		5E278FDE280126B00052EA64 /* InternetReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetReachability.swift; sourceTree = "<group>"; };
 		5E278FE128012BC60052EA64 /* PokemonModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PokemonModel.xcdatamodel; sourceTree = "<group>"; };
 		5E278FE428012F030052EA64 /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
+		5E278FE728014A710052EA64 /* PokemonHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 		5E278F9B27FEF4050052EA64 /* ExytePockemon */ = {
 			isa = PBXGroup;
 			children = (
+				5E278FE628014A480052EA64 /* Helpers */,
 				5E278FE328012ED60052EA64 /* DBHelpers */,
 				5E278FDA280060370052EA64 /* Models */,
 				5E278FD5280029790052EA64 /* PokemonDescription */,
@@ -188,6 +191,14 @@
 			path = DBHelpers;
 			sourceTree = "<group>";
 		};
+		5E278FE628014A480052EA64 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				5E278FE728014A710052EA64 /* PokemonHelper.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -271,6 +282,7 @@
 				5E278FB527FFD1EF0052EA64 /* PockemonViewCell.swift in Sources */,
 				5E278FA127FEF4050052EA64 /* ViewController.swift in Sources */,
 				5E278FBA27FFD44D0052EA64 /* NetworkManager.swift in Sources */,
+				5E278FE828014A710052EA64 /* PokemonHelper.swift in Sources */,
 				5E278FE528012F030052EA64 /* DBManager.swift in Sources */,
 				5E278FDF280126B00052EA64 /* InternetReachability.swift in Sources */,
 				5E278F9D27FEF4050052EA64 /* AppDelegate.swift in Sources */,

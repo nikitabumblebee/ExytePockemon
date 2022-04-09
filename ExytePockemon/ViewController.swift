@@ -41,15 +41,15 @@ class ViewController: UIViewController {
             }
             self.pokemons = appDelegate.pokemons
             DispatchQueue.main.async {
-                self.allCollectionView.indexPathsForVisibleItems.forEach {
-                    if let cell = self.allCollectionView.cellForItem(at: $0) as? PockemonCellCollectionViewCell,
-                       let imagePath = self.pokemons[$0.row].frontSideImagePath,
-                       let pokemonName = self.pokemons[$0.row].name {
-                        cell.configureCell(viewModel: PokemonCellViewModel(name: pokemonName, isFavorite: false, imagePath: imagePath))
-                        self.isLoaded = true
-                        self.allCollectionView.reloadData()
-                    }
-                }
+                self.allCollectionView.reloadData()
+                self.isLoaded = true
+//                self.allCollectionView.indexPathsForVisibleItems.forEach {
+//                    if let cell = self.allCollectionView.cellForItem(at: $0) as? PockemonCellCollectionViewCell {
+//                        cell.configureCell(viewModel: self.pokemons[$0.row])
+//                        self.isLoaded = true
+//                        self.allCollectionView.reloadData()
+//                    }
+//                }
             }
         }
     }
@@ -63,15 +63,15 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if isLoaded {
             if collectionView == self.favoriteCollectionView {
-                return 2
+                return 0
             } else {
                 return self.pokemons.count
             }
         } else {
             if collectionView == self.favoriteCollectionView {
-                return 2
+                return 0
             } else {
-                return 20
+                return 0
             }
         }
     }
@@ -79,27 +79,23 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.favoriteCollectionView {
             let cell = favoriteCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
-            cell.configureCell(viewModel: PokemonCellViewModel(name: "123", isFavorite: true, imagePath: ""))
+            cell.configureCell(viewModel: self.pokemons[indexPath.row])
             
             return cell
         }
         else {
             if isLoaded {
-                let cell = favoriteCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
-                if let name = self.pokemons[indexPath.row].name,
-                   let imagePath = self.pokemons[indexPath.row].frontSideImagePath {
-                    cell.configureCell(viewModel: PokemonCellViewModel(name: name, isFavorite: true, imagePath: imagePath))
-                }
+                let cell = self.favoriteCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
+                cell.configureCell(viewModel: self.pokemons[indexPath.row])
                 
                 return cell
             }
             else {
                 let cell = favoriteCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
-                cell.configureCell(viewModel: PokemonCellViewModel(name: "!!!!", isFavorite: true, imagePath: ""))
+                cell.configureCell(viewModel: self.pokemons[indexPath.row])
                 
                 return cell
             }
-            
         }
     }
     

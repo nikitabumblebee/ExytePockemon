@@ -34,6 +34,9 @@
                         <buttonConfiguration key="configuration" style="tinted" title="LIKE">
                             <fontDescription key="titleFontDescription" type="boldSystem" pointSize="17"/>
                         </buttonConfiguration>
+                        <connections>
+                            <action selector="changeStatusAction:" destination="gTV-IL-0wX" eventType="touchDown" id="U0Z-Hz-ESF"/>
+                        </connections>
                     </button>
                 </subviews>
             </view>

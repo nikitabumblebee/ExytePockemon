@@ -17,23 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private(set) var isLoaded = false
     
     private func loadData() {
-        let networkManager = NetworkManager()
+        let pokemonHelper = PokemonHelper()
         DispatchQueue.global(qos: .utility).async {
-            let pokemonCount = networkManager.getPokemonCount()
-            
             let pokemonEntity = DBManager.shared().loadData(entityName: "PokemonList")
-            
-            if pokemonCount == pokemonEntity.count {
-                print(pokemonCount)
+            if pokemonEntity.count > 0 {
+                self.pokemons = pokemonEntity
             } else {
-                networkManager.getAllPokemons(totalPokemonCount: pokemonCount)
-                while networkManager.isReady == false {
-                    self.pokemons = networkManager.pokemons
-                }
-                DispatchQueue.global(qos: .background).async {
-                    for pokemon in self.pokemons {
-                        DBManager.shared().saveEntity(entityName: "PokemonList", pokemon: pokemon)
-                    }
+                let pokemonCount = pokemonHelper.getPokemonCount()
+                pokemonHelper.getAllPokemons(totalPokemonCount: pokemonCount)
+                while pokemonHelper.isReady == false {
+                    self.pokemons = pokemonHelper.pokemons
                 }
             }
             self.isLoaded = true
