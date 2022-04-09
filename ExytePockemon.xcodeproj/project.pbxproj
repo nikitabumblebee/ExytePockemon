@@ -24,6 +24,7 @@
 		5E278FD7280029AD0052EA64 /* PokemonDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E278FD6280029AD0052EA64 /* PokemonDescriptionView.swift */; };
 		5E278FD9280029C50052EA64 /* PokemonDescriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E278FD8280029C50052EA64 /* PokemonDescriptionView.xib */; };
 		5E278FDC2800605B0052EA64 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E278FDB2800605B0052EA64 /* Pokemon.swift */; };
+		5E278FDF280126B00052EA64 /* InternetReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E278FDE280126B00052EA64 /* InternetReachability.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		5E278FD6280029AD0052EA64 /* PokemonDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDescriptionView.swift; sourceTree = "<group>"; };
 		5E278FD8280029C50052EA64 /* PokemonDescriptionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PokemonDescriptionView.xib; sourceTree = "<group>"; };
 		5E278FDB2800605B0052EA64 /* Pokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
+		5E278FDE280126B00052EA64 /* InternetReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetReachability.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 			children = (
 				5E278FDD28006D530052EA64 /* Models */,
 				5E278FB927FFD44D0052EA64 /* NetworkManager.swift */,
+				5E278FDE280126B00052EA64 /* InternetReachability.swift */,
 			);
 			path = Rest;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 				5E278FB527FFD1EF0052EA64 /* PockemonViewCell.swift in Sources */,
 				5E278FA127FEF4050052EA64 /* ViewController.swift in Sources */,
 				5E278FBA27FFD44D0052EA64 /* NetworkManager.swift in Sources */,
+				5E278FDF280126B00052EA64 /* InternetReachability.swift in Sources */,
 				5E278F9D27FEF4050052EA64 /* AppDelegate.swift in Sources */,
 				5E278FC227FFE1FE0052EA64 /* PockemonCellCollectionViewCell.swift in Sources */,
 				5E278FDC2800605B0052EA64 /* Pokemon.swift in Sources */,
