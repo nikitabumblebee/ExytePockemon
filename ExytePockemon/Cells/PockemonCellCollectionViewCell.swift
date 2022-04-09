@@ -17,7 +17,7 @@ class PockemonCellCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    private var viewModel: Pokemon?
+    private(set) var viewModel: Pokemon?
     
     @IBAction func changeStatusAction(_ sender: UIButton) {
         self.viewModel?.isFavorite.toggle()
@@ -27,22 +27,16 @@ class PockemonCellCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    @IBOutlet weak var cellview: UIView!
+    @IBOutlet weak var parentView: UIView!
     @IBOutlet weak var pockemonImage: UIImageView!
     @IBOutlet weak var pockemonName: UILabel!
     @IBOutlet weak var favoriteStatusButton: UIButton!
+    @IBOutlet weak var navigateButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         contentView.addSubview(photo)
         addConstraints()
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-        cellview.addGestureRecognizer(tap)
-    }
-    
-    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
-        print("!!!")
     }
 
     override func prepareForReuse() {

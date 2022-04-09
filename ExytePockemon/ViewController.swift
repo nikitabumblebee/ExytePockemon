@@ -12,6 +12,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var contentScrollView: UIScrollView!
     @IBOutlet weak var allCollectionView: UICollectionView!
     @IBOutlet weak var favoriteCollectionView: UICollectionView!
+    @IBAction func navigationButton(_ sender: UIButton) {
+        
+    }
     
     private var isFavorite = false
     
@@ -70,7 +73,7 @@ extension ViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == self.favoriteCollectionView {
+        if collectionView == favoriteCollectionView {
             let cell = favoriteCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
             cell.configureCell(viewModel: self.pokemons[indexPath.row])
             
@@ -78,9 +81,10 @@ extension ViewController: UICollectionViewDataSource {
         }
         else {
             if isLoaded {
-                let cell = self.favoriteCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
+                let cell = allCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
                 cell.configureCell(viewModel: self.pokemons[indexPath.row])
-                
+                cell.navigateButton.tag = indexPath.row
+                cell.navigateButton.addTarget(self, action: #selector(goDetail), for: .touchUpInside)
                 return cell
             }
             else {
@@ -90,6 +94,11 @@ extension ViewController: UICollectionViewDataSource {
                 return cell
             }
         }
+    }
+    
+    @objc func goDetail(sender: UIButton) {
+        let pokemon = self.pokemons[sender.tag]
+        self.navigationController?.pushViewController(SelectedPokemonDescriptionController(pokemon: pokemon), animated: true)
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

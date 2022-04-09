@@ -28,6 +28,9 @@
 		5E278FE228012BC60052EA64 /* PokemonModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5E278FE028012BC50052EA64 /* PokemonModel.xcdatamodeld */; };
 		5E278FE528012F030052EA64 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E278FE428012F030052EA64 /* DBManager.swift */; };
 		5E278FE828014A710052EA64 /* PokemonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E278FE728014A710052EA64 /* PokemonHelper.swift */; };
+		5E278FF02801E1890052EA64 /* PokemonDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E278FEF2801E1890052EA64 /* PokemonDetailsViewController.swift */; };
+		5E278FF52801E4240052EA64 /* SelectedPokemonDescriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E278FF32801E4240052EA64 /* SelectedPokemonDescriptionController.swift */; };
+		5E278FF62801E4240052EA64 /* SelectedPokemonDescriptionController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E278FF42801E4240052EA64 /* SelectedPokemonDescriptionController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +56,9 @@
 		5E278FE128012BC60052EA64 /* PokemonModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PokemonModel.xcdatamodel; sourceTree = "<group>"; };
 		5E278FE428012F030052EA64 /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
 		5E278FE728014A710052EA64 /* PokemonHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonHelper.swift; sourceTree = "<group>"; };
+		5E278FEF2801E1890052EA64 /* PokemonDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailsViewController.swift; sourceTree = "<group>"; };
+		5E278FF32801E4240052EA64 /* SelectedPokemonDescriptionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedPokemonDescriptionController.swift; sourceTree = "<group>"; };
+		5E278FF42801E4240052EA64 /* SelectedPokemonDescriptionController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectedPokemonDescriptionController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +117,8 @@
 		5E278FB027FFCFF80052EA64 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5E278FF32801E4240052EA64 /* SelectedPokemonDescriptionController.swift */,
+				5E278FF42801E4240052EA64 /* SelectedPokemonDescriptionController.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -119,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				5E278FB427FFD1EF0052EA64 /* PockemonViewCell.swift */,
+				5E278FEF2801E1890052EA64 /* PokemonDetailsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -263,6 +272,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E278FF62801E4240052EA64 /* SelectedPokemonDescriptionController.xib in Resources */,
 				5E278FCF28001FEA0052EA64 /* PockemonTypeCollectionViewController.xib in Resources */,
 				5E278FD9280029C50052EA64 /* PokemonDescriptionView.xib in Resources */,
 				5E278FA927FEF4060052EA64 /* LaunchScreen.storyboard in Resources */,
@@ -289,10 +299,12 @@
 				5E278FC227FFE1FE0052EA64 /* PockemonCellCollectionViewCell.swift in Sources */,
 				5E278FDC2800605B0052EA64 /* Pokemon.swift in Sources */,
 				5E278F9F27FEF4050052EA64 /* SceneDelegate.swift in Sources */,
+				5E278FF02801E1890052EA64 /* PokemonDetailsViewController.swift in Sources */,
 				5E278FD7280029AD0052EA64 /* PokemonDescriptionView.swift in Sources */,
 				5E278FCE28001FEA0052EA64 /* PockemonTypeCollectionViewController.swift in Sources */,
 				5E278FC627FFE39A0052EA64 /* PokemonCellViewModel.swift in Sources */,
 				5E278FE228012BC60052EA64 /* PokemonModel.xcdatamodeld in Sources */,
+				5E278FF52801E4240052EA64 /* SelectedPokemonDescriptionController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

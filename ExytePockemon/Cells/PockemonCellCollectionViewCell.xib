@@ -32,6 +32,12 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nmh-wb-1Nj">
+                                <rect key="frame" x="20" y="0.0" width="199" height="200"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="1"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4nl-ea-A7O">
                                 <rect key="frame" x="90" y="149" width="60.5" height="30"/>
                                 <constraints>
@@ -67,8 +73,9 @@
                 <constraint firstItem="uk4-Bh-6k6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="-20" id="uC2-Wz-ViP"/>
             </constraints>
             <connections>
-                <outlet property="cellview" destination="uk4-Bh-6k6" id="5fI-rQ-PIy"/>
                 <outlet property="favoriteStatusButton" destination="4nl-ea-A7O" id="Cbd-IL-c0H"/>
+                <outlet property="navigateButton" destination="nmh-wb-1Nj" id="W9X-51-OUV"/>
+                <outlet property="parentView" destination="uk4-Bh-6k6" id="hRC-KB-8kW"/>
                 <outlet property="pockemonImage" destination="P8a-p2-rrN" id="PDV-SK-5tR"/>
                 <outlet property="pockemonName" destination="CYM-k9-mZd" id="lSB-St-5BE"/>
             </connections>
