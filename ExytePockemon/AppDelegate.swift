@@ -21,9 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DispatchQueue.global(qos: .utility).async {
             let pokemonCount = networkManager.getPokemonCount()
             
-            let pokemonEntityCount = DBManager.shared().dbEntities.count
+            let pokemonEntity = DBManager.shared().loadData(entityName: "PokemonList")
             
-            if pokemonCount == pokemonEntityCount {
+            if pokemonCount == pokemonEntity.count {
                 print(pokemonCount)
             } else {
                 networkManager.getAllPokemons(totalPokemonCount: pokemonCount)
