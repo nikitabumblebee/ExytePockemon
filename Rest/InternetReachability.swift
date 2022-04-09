@@ -8,7 +8,7 @@
 import Foundation
 import SystemConfiguration
 
-public class Reachability {
+class Reachability {
     var hostname: String?
         var isRunning = false
         var isReachableOnWWAN: Bool

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21C52" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="PokemonList" representedClassName="PokemonList" syncable="YES" codeGenerationType="class">
+        <attribute name="abilities" optional="YES" attributeType="Transformable"/>
+        <attribute name="backImage" optional="YES" attributeType="String"/>
+        <attribute name="baseExperience" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="frontImage" optional="YES" attributeType="String"/>
+        <attribute name="height" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="types" optional="YES" attributeType="Transformable"/>
+        <attribute name="weight" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <elements>
+        <element name="PokemonList" positionX="-63" positionY="-18" width="128" height="164"/>
+    </elements>
+</model>

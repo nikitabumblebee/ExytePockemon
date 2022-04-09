@@ -16,30 +16,31 @@ public class NetworkManager {
     public private(set) var pokemons: [Pokemon] = []
     
     public private(set) var isReady = false
-    
-    private var cancellables = Set<AnyCancellable>()
+        
+    public func checkInternet() -> Bool {
+        do {
+            try Network.reachability = Reachability(hostname: "www.google.com")
+            return true
+        } catch {
+            switch error as? Network.Error {
+            case let .failedToCreateWith(hostname)?:
+                print("Network error:\nFailed to create reachability object With host named:", hostname)
+            case let .failedToInitializeWith(address)?:
+                print("Network error:\nFailed to initialize reachability object With address:", address)
+            case .failedToSetCallout?:
+                print("Network error:\nFailed to set callout")
+            case .failedToSetDispatchQueue?:
+                print("Network error:\nFailed to set DispatchQueue")
+            case .none:
+                print(error)
+            }
+            return false
+        }
+    }
     
     public func getPokemonCount() -> Int {
-//        let pokemonService = PokemonAPI().pokemonService.fetchPokemonList()
-//        let cancellable = pokemonService
-//            .sink(receiveCompletion: { completion in
-//                    if case .failure(let error) = completion {
-//                        print(error.localizedDescription)
-//                    }
-//                }, receiveValue: { pokemonsResult in
-//                    if let totalPokemons = pokemonsResult.count {
-//                        self.totalPokemonCount = totalPokemons
-//                    } else {
-//                        self.totalPokemonCount = 0
-//                    }
-//                    print("Total pokemons: \(self.totalPokemonCount)")
-//                })
-//        let repoPublisher = pokemonService
-//            .map(\.count)
-//            .receive(on: DispatchQueue.main)
-        
         var iteration = 0
-        while self.totalPokemonCount == 0 || iteration < 100 {
+        while self.totalPokemonCount == 0 || iteration == 20 {
             PokemonAPI().pokemonService.fetchPokemonList(completion: { result in
                 switch result {
                 case .success(let pokemonResult):
