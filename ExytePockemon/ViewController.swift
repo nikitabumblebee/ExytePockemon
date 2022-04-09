@@ -43,13 +43,6 @@ class ViewController: UIViewController {
             DispatchQueue.main.async {
                 self.allCollectionView.reloadData()
                 self.isLoaded = true
-//                self.allCollectionView.indexPathsForVisibleItems.forEach {
-//                    if let cell = self.allCollectionView.cellForItem(at: $0) as? PockemonCellCollectionViewCell {
-//                        cell.configureCell(viewModel: self.pokemons[$0.row])
-//                        self.isLoaded = true
-//                        self.allCollectionView.reloadData()
-//                    }
-//                }
             }
         }
     }

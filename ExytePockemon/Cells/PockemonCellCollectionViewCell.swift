@@ -27,6 +27,7 @@ class PockemonCellCollectionViewCell: UICollectionViewCell {
         }
     }
 
+    @IBOutlet weak var cellview: UIView!
     @IBOutlet weak var pockemonImage: UIImageView!
     @IBOutlet weak var pockemonName: UILabel!
     @IBOutlet weak var favoriteStatusButton: UIButton!
@@ -35,8 +36,15 @@ class PockemonCellCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         contentView.addSubview(photo)
         addConstraints()
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        cellview.addGestureRecognizer(tap)
     }
     
+    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+        print("!!!")
+    }
+
     override func prepareForReuse() {
         super.prepareForReuse()
         photo.image = nil
@@ -63,7 +71,7 @@ class PockemonCellCollectionViewCell: UICollectionViewCell {
             }
         }
     }
-    
+
     private var cachedImage: UIImage?
     private var isDownloading = false
     private var callback: ((UIImage?) -> Void)?
