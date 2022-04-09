@@ -19,7 +19,6 @@ class SelectedPokemonDescriptionController: UIViewController {
     @IBOutlet weak var typesMultilineLabel: UILabel!
     @IBOutlet weak var abilitiesMultilineLabel: UILabel!
     
-    
     var pokemon: Pokemon
     
     init(pokemon: Pokemon) {
@@ -57,9 +56,6 @@ class SelectedPokemonDescriptionController: UIViewController {
                 }
             }
         }
-        
-        print("qwerty")
-        // Do any additional setup after loading the view.
     }
 
     private func loadImage(imagePath: String, completion: ((UIImage?) -> Void)?) {
