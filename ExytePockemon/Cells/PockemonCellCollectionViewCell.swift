@@ -16,15 +16,13 @@ class PockemonCellCollectionViewCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
+        
     private(set) var viewModel: Pokemon?
     
     @IBAction func changeStatusAction(_ sender: UIButton) {
         self.viewModel?.isFavorite.toggle()
         DBManager.shared().updateEntity(entityName: "PokemonList", pokemon: viewModel!)
-        DispatchQueue.main.async {
-            self.favoriteStatusButton.titleLabel?.text = self.viewModel!.isFavorite ? "DISLIKE" : "LIKE💙"
-        }
+        configureButton(sender)
     }
 
     @IBOutlet weak var parentView: UIView!
@@ -58,12 +56,23 @@ class PockemonCellCollectionViewCell: UICollectionViewCell {
         self.layer.borderWidth = CGFloat(1)
         self.layer.cornerRadius = CGFloat(8)
         pockemonName.text = viewModel.name
-        favoriteStatusButton.titleLabel?.text = viewModel.isFavorite ? "DISLIKE" : "LIKE"
+        configureButton(favoriteStatusButton)
         let utility = Utility()
         utility.downloadImage(imagePath: viewModel.frontImage) { [weak self] image in
             DispatchQueue.main.async {
                 self?.photo.image = image
             }
+        }
+    }
+}
+
+// MARK: Private methods
+extension PockemonCellCollectionViewCell {
+    private func configureButton(_ sender: UIButton) {
+        DispatchQueue.main.async {
+            let buttonTitle = self.viewModel!.isFavorite ? "DISLIKE" : "LIKE💙"
+            sender.setTitle(buttonTitle, for: .normal)
+            sender.titleLabel?.adjustsFontSizeToFitWidth = true
         }
     }
 }

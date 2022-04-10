@@ -85,29 +85,29 @@ class DBManager {
     }
     
     func updateEntity(entityName: String, pokemon: Pokemon) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let  fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
-        fetchRequest.predicate = NSPredicate(format: "name = %@", pokemon.name)
-        do {
-            guard let result = try managedContext.fetch(fetchRequest) as? [NSManagedObject] else {
+        DispatchQueue.global(qos: .userInitiated).async {
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return
             }
-            guard let objc = result.first else { return }
-            objc.setValue(pokemon.isFavorite, forKey: "isFavorite")
+            
+            let managedContext = appDelegate.persistentContainer.viewContext
+            
+            let  fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+            fetchRequest.predicate = NSPredicate(format: "name = %@", pokemon.name)
             do {
-                try managedContext.save()
-                print(dbEntities.count)
-                debugPrint("Data Updated")
+                guard let result = try managedContext.fetch(fetchRequest) as? [NSManagedObject] else {
+                    return
+                }
+                guard let objc = result.first else { return }
+                objc.setValue(pokemon.isFavorite, forKey: "isFavorite")
+                do {
+                    try managedContext.save()
+                } catch let error as NSError {
+                    debugPrint(error)
+                }
             } catch let error as NSError {
                 debugPrint(error)
             }
-        } catch let error as NSError {
-            debugPrint(error)
         }
     }
 }
