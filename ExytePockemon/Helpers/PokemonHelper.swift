@@ -10,7 +10,27 @@ import PokemonAPI
 import CoreData
 
 class PokemonHelper {
-    public func getAllPokemons(totalPokemonCount: Int) -> [Pokemon] {
+    func getConvertedManagedObjectsToPokemons(objects: [NSManagedObject]) -> [Pokemon] {
+        var pokemons: [Pokemon] = []
+        for data in objects {
+            let id = data.value(forKey: "id") as! Int
+            let name = data.value(forKey: "name") as! String
+            let weight = data.value(forKey: "weight") as! Int
+            let height = data.value(forKey: "height") as! Int
+            let order = data.value(forKey: "order") as! Int
+            let baseExperience = data.value(forKey: "baseExperience") as! Int
+            let types = data.value(forKey: "types") as! [String]
+            let abilities = data.value(forKey: "abilities") as! [String]
+            let frontImage = data.value(forKey: "frontImage") as! String
+            let backImage = data.value(forKey: "backImage") as! String
+            let isFavorite = data.value(forKey: "isFavorite") as! Bool
+            let pokemon = Pokemon(id: id, name: name, weight: weight, height: height, order: order, baseExperience: baseExperience, types: types, abilities: abilities, frontImage: frontImage, backImage: backImage, isFavorite: isFavorite)
+            pokemons.append(pokemon)
+        }
+        return pokemons
+    }
+    
+    func getAllPokemons(totalPokemonCount: Int) -> [Pokemon] {
         var pokemons: [Pokemon] = []
         let group = DispatchGroup()
         group.enter()
@@ -65,7 +85,7 @@ class PokemonHelper {
         }
     }
     
-    public func getPokemonCount() -> Int {
+    func getPokemonCount() -> Int {
         var pokemonCount = 0
         let group = DispatchGroup()
         group.enter()

@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let pokemonCount = pokemonHelper.getPokemonCount()
             let pokemonEntity = DBManager.shared().loadPokemonData(entityName: "PokemonList")
             if pokemonEntity.count > 0 {
-                self.pokemons = pokemonEntity
+                self.pokemons = pokemonHelper.getConvertedManagedObjectsToPokemons(objects: pokemonEntity)
                 
                 // TODO: Add pokemon count check
 //                let isAllPokemonsLoaded = pokemonHelper.checkAvailablePokemons(pokemonCount: pokemonCount)
@@ -47,7 +47,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if isActive {
             self.loadData()
         } else {
-            self.pokemons = DBManager.shared().loadPokemonData(entityName: "PokemonList")
+            let pokemonEntity = DBManager.shared().loadPokemonData(entityName: "PokemonList")
+            let pokemonHelper = PokemonHelper()
+            self.pokemons = pokemonHelper.getConvertedManagedObjectsToPokemons(objects: pokemonEntity)
         }
         return true
     }
