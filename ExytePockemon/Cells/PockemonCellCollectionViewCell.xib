@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,45 +17,74 @@
                 <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="P8a-p2-rrN">
-                        <rect key="frame" x="50" y="0.0" width="100" height="100"/>
-                    </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CYM-k9-mZd">
-                        <rect key="frame" x="79" y="115" width="42" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4nl-ea-A7O">
-                        <rect key="frame" x="70" y="137" width="60.5" height="30"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uk4-Bh-6k6">
+                        <rect key="frame" x="-20" y="0.0" width="240" height="200"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="P8a-p2-rrN">
+                                <rect key="frame" x="70" y="0.0" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="1Vx-zI-a32"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CYM-k9-mZd">
+                                <rect key="frame" x="99" y="120" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nmh-wb-1Nj">
+                                <rect key="frame" x="20" y="0.0" width="199" height="200"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="1"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4nl-ea-A7O">
+                                <rect key="frame" x="90" y="149" width="60.5" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="J7j-mb-00X"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="LIKE">
+                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="17"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="changeStatusAction:" destination="gTV-IL-0wX" eventType="touchDown" id="U0Z-Hz-ESF"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="J7j-mb-00X"/>
+                            <constraint firstItem="4nl-ea-A7O" firstAttribute="top" secondItem="CYM-k9-mZd" secondAttribute="bottom" constant="8" id="Hns-S2-pjE"/>
+                            <constraint firstItem="P8a-p2-rrN" firstAttribute="centerX" secondItem="4nl-ea-A7O" secondAttribute="centerX" id="VIv-st-bc2"/>
+                            <constraint firstItem="P8a-p2-rrN" firstAttribute="centerX" secondItem="CYM-k9-mZd" secondAttribute="centerX" id="gWn-QX-kd4"/>
+                            <constraint firstItem="CYM-k9-mZd" firstAttribute="top" secondItem="P8a-p2-rrN" secondAttribute="bottom" constant="20" id="khi-kT-Dat"/>
+                            <constraint firstItem="P8a-p2-rrN" firstAttribute="top" secondItem="uk4-Bh-6k6" secondAttribute="top" id="t4z-SS-JpP"/>
+                            <constraint firstItem="P8a-p2-rrN" firstAttribute="leading" secondItem="uk4-Bh-6k6" secondAttribute="leading" constant="70" id="vnH-Vf-7Kb"/>
+                            <constraint firstItem="P8a-p2-rrN" firstAttribute="centerX" secondItem="uk4-Bh-6k6" secondAttribute="centerX" id="wXJ-y1-9Yy"/>
                         </constraints>
-                        <state key="normal" title="Button"/>
-                        <buttonConfiguration key="configuration" style="tinted" title="LIKE">
-                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="17"/>
-                        </buttonConfiguration>
-                    </button>
+                    </view>
                 </subviews>
             </view>
+            <gestureRecognizers/>
             <constraints>
-                <constraint firstItem="4nl-ea-A7O" firstAttribute="top" secondItem="CYM-k9-mZd" secondAttribute="bottom" constant="1" id="4eK-6l-jhT"/>
-                <constraint firstItem="P8a-p2-rrN" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" multiplier="0.5" id="ECB-Rr-Lzp"/>
-                <constraint firstItem="P8a-p2-rrN" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="IIH-sT-eUY"/>
-                <constraint firstItem="P8a-p2-rrN" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" multiplier="0.5" id="OEE-Ky-YcX"/>
-                <constraint firstItem="P8a-p2-rrN" firstAttribute="centerX" secondItem="CYM-k9-mZd" secondAttribute="centerX" id="WAw-G3-VAA"/>
-                <constraint firstItem="CYM-k9-mZd" firstAttribute="top" secondItem="P8a-p2-rrN" secondAttribute="bottom" constant="15" id="WW5-PB-Zbb"/>
-                <constraint firstItem="P8a-p2-rrN" firstAttribute="centerX" secondItem="4nl-ea-A7O" secondAttribute="centerX" id="YXi-AR-U5i"/>
-                <constraint firstItem="P8a-p2-rrN" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="g16-Ph-Pyh"/>
-                <constraint firstItem="4nl-ea-A7O" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="hPb-k4-Qjv"/>
-                <constraint firstItem="CYM-k9-mZd" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="rPl-us-wOu"/>
+                <constraint firstItem="uk4-Bh-6k6" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="5Pc-Dz-DQ1"/>
+                <constraint firstItem="uk4-Bh-6k6" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="MY0-5j-dac"/>
+                <constraint firstItem="uk4-Bh-6k6" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="qqg-Sw-dkz"/>
+                <constraint firstItem="uk4-Bh-6k6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="-20" id="uC2-Wz-ViP"/>
             </constraints>
             <connections>
                 <outlet property="favoriteStatusButton" destination="4nl-ea-A7O" id="Cbd-IL-c0H"/>
+                <outlet property="navigateButton" destination="nmh-wb-1Nj" id="W9X-51-OUV"/>
+                <outlet property="parentView" destination="uk4-Bh-6k6" id="hRC-KB-8kW"/>
                 <outlet property="pockemonImage" destination="P8a-p2-rrN" id="PDV-SK-5tR"/>
                 <outlet property="pockemonName" destination="CYM-k9-mZd" id="lSB-St-5BE"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="95.758928571428569"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

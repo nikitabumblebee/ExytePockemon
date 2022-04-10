@@ -17,18 +17,28 @@ class PockemonCellCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    private var viewModel: PokemonCellViewModel?
+    private(set) var viewModel: Pokemon?
     
+    @IBAction func changeStatusAction(_ sender: UIButton) {
+        self.viewModel?.isFavorite.toggle()
+        DBManager.shared().updateEntity(entityName: "PokemonList", pokemon: viewModel!)
+        DispatchQueue.main.async {
+            self.favoriteStatusButton.titleLabel?.text = self.viewModel!.isFavorite ? "DISLIKE" : "LIKE💙"
+        }
+    }
+
+    @IBOutlet weak var parentView: UIView!
     @IBOutlet weak var pockemonImage: UIImageView!
     @IBOutlet weak var pockemonName: UILabel!
     @IBOutlet weak var favoriteStatusButton: UIButton!
+    @IBOutlet weak var navigateButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         contentView.addSubview(photo)
         addConstraints()
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         photo.image = nil
@@ -42,14 +52,15 @@ class PockemonCellCollectionViewCell: UICollectionViewCell {
                                      photo.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -100)])
     }
 
-    func configureCell(viewModel: PokemonCellViewModel) {
+    func configureCell(viewModel: Pokemon) {
         self.viewModel = viewModel
         self.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
         self.layer.borderWidth = CGFloat(1)
         self.layer.cornerRadius = CGFloat(8)
         pockemonName.text = viewModel.name
-        favoriteStatusButton.titleLabel?.text = viewModel.isFavoriteStatus ? "DISLIKE" : "LIKE"
-        viewModel.downloadImage(imagePath: viewModel.imagePath) { [weak self] image in
+        favoriteStatusButton.titleLabel?.text = viewModel.isFavorite ? "DISLIKE" : "LIKE"
+        let utility = Utility()
+        utility.downloadImage(imagePath: viewModel.frontImage) { [weak self] image in
             DispatchQueue.main.async {
                 self?.photo.image = image
             }
