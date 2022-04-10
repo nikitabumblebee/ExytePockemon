@@ -9,7 +9,16 @@ import Foundation
 import PokemonAPI
 import Combine
 
+/// Provides facade of network usage
 public class NetworkManager {
+    
+    /**
+     Check internet connection
+     
+     Calling this method will check internet connection
+     
+     - Returns: Connection status
+     */
     public func checkInternet() -> Bool {
         do {
             try Network.reachability = Reachability(hostname: "www.google.com")

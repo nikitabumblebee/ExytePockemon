@@ -19,7 +19,7 @@ class SelectedPokemonDescriptionController: UIViewController {
     @IBOutlet weak var typesMultilineLabel: UILabel!
     @IBOutlet weak var abilitiesMultilineLabel: UILabel!
     
-    var pokemon: Pokemon
+    private var pokemon: Pokemon
     
     init(pokemon: Pokemon) {
         self.pokemon = pokemon

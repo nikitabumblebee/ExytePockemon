@@ -140,6 +140,7 @@
                         <outlet property="allCollectionView" destination="kZF-Qd-5vD" id="vpE-3d-0ma"/>
                         <outlet property="contentScrollView" destination="UuE-oS-5lN" id="bAt-c8-5bR"/>
                         <outlet property="favoriteCollectionView" destination="gyd-u7-9Vx" id="HC1-fx-vhv"/>
+                        <outlet property="favoriteLabel" destination="Fc6-2Y-u3q" id="vYE-9u-Xi1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q1f-Jh-toV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

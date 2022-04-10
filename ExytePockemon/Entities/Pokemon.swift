@@ -8,6 +8,7 @@
 import Foundation
 
 public class Pokemon {
+    public var id: Int
     var name: String
     var weight: Int
     var height: Int
@@ -19,7 +20,8 @@ public class Pokemon {
     var backImage: String
     var isFavorite: Bool
     
-    init(name: String, weight: Int, height: Int, order: Int, baseExperience: Int, types: [String], abilities: [String], frontImage: String, backImage: String, isFavorite: Bool) {
+    init(id: Int, name: String, weight: Int, height: Int, order: Int, baseExperience: Int, types: [String], abilities: [String], frontImage: String, backImage: String, isFavorite: Bool) {
+        self.id = id
         self.name = name
         self.weight = weight
         self.height = height
@@ -34,6 +36,7 @@ public class Pokemon {
     
     required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(Int.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
         weight = try container.decode(Int.self, forKey: .weight)
         height = try container.decode(Int.self, forKey: .height)
@@ -49,6 +52,7 @@ public class Pokemon {
 
 extension Pokemon: Codable {
     enum CodingKeys: CodingKey {
+        case id
         case name
         case weight
         case height
@@ -77,3 +81,5 @@ extension Pokemon: Codable {
 }
 
 extension Pokemon: Identifiable { }
+
+extension Pokemon: EntityProtocol { }
