@@ -9,26 +9,25 @@ import Foundation
 import UIKit
 
 class ParentControllerViewModel {
-    private(set) var pokemons: [Pokemon] = []
+    let pokemonsCollectionModel: PokemonCollectionModel
     
     init() {
-        self.pokemons = loadPokemons()
+        self.pokemonsCollectionModel = PokemonCollectionModel()
     }
     
-    private func loadPokemons() -> [Pokemon] {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.pokemons
+    func getAllPokemons() -> [Pokemon] {
+        return pokemonsCollectionModel.pokemons
     }
     
     func getFavoritePokemons() -> [Pokemon] {
-        return pokemons.filter { $0.isFavorite }
+        return pokemonsCollectionModel.pokemons.filter { $0.isFavorite }
     }
     
     func getConcretePokemonByID(id: Int) -> Pokemon? {
-        return pokemons.first { $0.id == id }
+        return pokemonsCollectionModel.pokemons.first { $0.id == id }
     }
     
     func setFavoriteHidden() -> Bool {
-        return pokemons.filter { $0.isFavorite }.count > 0 ? false : true
+        return pokemonsCollectionModel.pokemons.filter { $0.isFavorite }.count > 0 ? false : true
     }
 }
