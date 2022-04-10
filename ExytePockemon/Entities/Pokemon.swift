@@ -81,3 +81,5 @@ extension Pokemon: Codable {
 }
 
 extension Pokemon: Identifiable { }
+
+extension Pokemon: EntityProtocol { }

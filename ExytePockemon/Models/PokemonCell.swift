@@ -16,6 +16,6 @@ class PokemonCell {
     
     func changeFavoriteStatus() {
         pokemon.isFavorite.toggle()
-        DBManager.shared().updateEntity(entityName: "PokemonList", pokemon: pokemon)
+        DBManager.shared().updateEntity(entityName: "PokemonList", entity: pokemon, value: pokemon.isFavorite, forKey: "isFavorite")
     }
 }

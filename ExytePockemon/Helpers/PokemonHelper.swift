@@ -42,7 +42,20 @@ class PokemonHelper {
                         let pokemon = self.buildPokemon(pokemonResult: pokemonResult)
                         pokemons.append(pokemon)
                         print("Get items \(pokemons.count)")
-                        DBManager.shared().saveEntity(entityName: "PokemonList", pokemon: pokemon)
+                        
+                        let pokemonKeyValuePairs: [String: Any] = ["id": pokemon.id,
+                                                                   "name": pokemon.name,
+                                                                   "height": pokemon.height,
+                                                                   "weight": pokemon.weight,
+                                                                   "baseExperience": pokemon.baseExperience,
+                                                                   "order": pokemon.order,
+                                                                   "frontImage": pokemon.frontImage,
+                                                                   "backImage": pokemon.backImage,
+                                                                   "types": pokemon.types,
+                                                                   "abilities": pokemon.abilities,
+                                                                   "isFavorite": pokemon.isFavorite]
+                        
+                        DBManager.shared().saveEntity(entityName: "PokemonList", entity: pokemon, keyValuePairs: pokemonKeyValuePairs)
                     case .failure(let error):
                         print(error.localizedDescription)
                     }
