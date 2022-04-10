@@ -9,6 +9,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var favoriteLabel: UILabel!
     @IBOutlet weak var contentScrollView: UIScrollView!
     @IBOutlet weak var allCollectionView: UICollectionView!
     @IBOutlet weak var favoriteCollectionView: UICollectionView!
@@ -37,6 +38,8 @@ extension ViewController: UICollectionViewDelegate {
 extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.favoriteCollectionView {
+            favoriteCollectionView.isHidden = self.viewModel.setFavoriteHidden()
+            favoriteLabel.isHidden = self.viewModel.setFavoriteHidden()
             return self.viewModel.getFavoritePokemons().count
         } else {
             return self.viewModel.pokemons.count

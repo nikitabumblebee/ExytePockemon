@@ -27,4 +27,8 @@ class ParentControllerViewModel {
     func getConcretePokemonByID(id: Int) -> Pokemon? {
         return pokemons.first { $0.id == id }
     }
+    
+    func setFavoriteHidden() -> Bool {
+        return pokemons.filter { $0.isFavorite }.count > 0 ? false : true
+    }
 }
