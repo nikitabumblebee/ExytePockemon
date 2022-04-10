@@ -68,14 +68,21 @@ extension ViewController: UICollectionViewDataSource {
             cell.configureCell(viewModel: self.pokemons[indexPath.row])
             cell.navigateButton.tag = self.pokemons[indexPath.row].id
             cell.navigateButton.addTarget(self, action: #selector(goDetail), for: .touchUpInside)
+            cell.favoriteStatusButton.addTarget(self, action: #selector(changeStatusAction), for: .touchUpInside)
             return cell
         } else {
             let cell = favoriteCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
             cell.configureCell(viewModel: self.pokemons.filter{ $0.isFavorite }[indexPath.row])
             cell.navigateButton.tag = self.pokemons.filter{ $0.isFavorite }[indexPath.row].id
             cell.navigateButton.addTarget(self, action: #selector(goDetail), for: .touchUpInside)
+            cell.favoriteStatusButton.addTarget(self, action: #selector(changeStatusAction), for: .touchUpInside)
             return cell
         }
+    }
+    
+    @objc func changeStatusAction(sender: UIButton) {
+        self.favoriteCollectionView.reloadData()
+        self.allCollectionView.reloadData()
     }
     
     @objc func goDetail(sender: UIButton) {
@@ -92,4 +99,3 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: favoriteCollectionView.frame.width / 2 - 10, height: favoriteCollectionView.frame.width / 2 - 10)
     }
 }
-
