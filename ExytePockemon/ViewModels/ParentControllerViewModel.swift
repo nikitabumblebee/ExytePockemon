@@ -15,8 +15,8 @@ class ParentControllerViewModel {
         self.pokemonsCollectionModel = PokemonCollectionModel()
     }
     
-    func getAllPokemons() -> [Pokemon] {
-        return pokemonsCollectionModel.pokemons
+    func getUnlikedPokemons() -> [Pokemon] {
+        return pokemonsCollectionModel.pokemons.filter { $0.isFavorite == false }
     }
     
     func getFavoritePokemons() -> [Pokemon] {

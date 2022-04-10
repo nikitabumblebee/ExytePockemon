@@ -42,7 +42,7 @@ extension ViewController: UICollectionViewDataSource {
             favoriteLabel.isHidden = self.viewModel.setFavoriteHidden()
             return self.viewModel.getFavoritePokemons().count
         } else {
-            return self.viewModel.getAllPokemons().count
+            return self.viewModel.getUnlikedPokemons().count
         }
     }
     
@@ -93,7 +93,7 @@ extension ViewController {
     
     private func buildAllCollectionCell(indexPath: IndexPath) -> PockemonCellCollectionViewCell {
         var cell = allCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
-        let pokemon = self.viewModel.getAllPokemons()[indexPath.row]
+        let pokemon = self.viewModel.getUnlikedPokemons()[indexPath.row]
         cell = createPokemonCell(cell: cell, pokemon: pokemon)
         return cell
     }
