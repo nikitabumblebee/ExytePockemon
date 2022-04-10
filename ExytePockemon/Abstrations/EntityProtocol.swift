@@ -8,6 +8,5 @@
 import Foundation
 
 protocol EntityProtocol {
-    var name: String { get set }
     var id: Int { get set }
 }

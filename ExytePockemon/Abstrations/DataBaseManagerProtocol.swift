@@ -42,7 +42,7 @@ extension DataBaseManagerProtocol {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
-        fetchRequest.predicate = NSPredicate(format: "name = %@", entity.name)
+        fetchRequest.predicate = NSPredicate(format: "id = %@", String(entity.id))
         do {
             guard let result = try managedContext.fetch(fetchRequest) as? [NSManagedObject] else { return }
             guard let objc = result.first else { return }
