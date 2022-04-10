@@ -49,8 +49,10 @@ class PokemonHelper {
     }
     
     public func getPokemonCount() -> Int {
-        var iteration = 0
-        while self.totalPokemonCount == 0 {
+        let group = DispatchGroup()
+        group.enter()
+        
+        DispatchQueue.global(qos: .utility).async {
             PokemonAPI().pokemonService.fetchPokemonList(completion: { result in
                 switch result {
                 case .success(let pokemonResult):
@@ -60,13 +62,16 @@ class PokemonHelper {
                         self.totalPokemonCount = 0
                     }
                     print("Success \(self.totalPokemonCount)")
+                    group.leave()
                     break
                 case .failure(let error):
+                    group.leave()
                     print(error.localizedDescription)
                 }
             })
-            iteration += 1
         }
+        group.wait()
+
         return totalPokemonCount
     }
     

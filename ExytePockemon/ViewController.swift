@@ -30,21 +30,6 @@ class ViewController: UIViewController {
         
         loadData()
     }
-    
-    private func loadData() {
-        DispatchQueue.global(qos: .utility).async {
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            while self.isLoaded == false {
-                self.isLoaded = appDelegate.isLoaded
-            }
-            self.pokemons = appDelegate.pokemons
-            DispatchQueue.main.async {
-                self.allCollectionView.reloadData()
-                self.favoriteCollectionView.reloadData()
-                self.isLoaded = true
-            }
-        }
-    }
 }
 
 extension ViewController: UICollectionViewDelegate {
@@ -54,10 +39,8 @@ extension ViewController: UICollectionViewDelegate {
 extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.favoriteCollectionView {
-            print("Favorite count: \(self.pokemons.filter{ $0.isFavorite }.count)")
             return self.pokemons.filter{ $0.isFavorite }.count
         } else {
-            print("Total count: \(self.pokemons.count)")
             return self.pokemons.count
         }
     }
@@ -97,5 +80,23 @@ extension ViewController: UICollectionViewDataSource {
 extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: favoriteCollectionView.frame.width / 2 - 10, height: favoriteCollectionView.frame.width / 2 - 10)
+    }
+}
+
+// MARK: Private functions
+extension ViewController {
+    private func loadData() {
+        DispatchQueue.global(qos: .utility).async {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            while self.isLoaded == false {
+                self.isLoaded = appDelegate.isLoaded
+            }
+            self.pokemons = appDelegate.pokemons
+            DispatchQueue.main.async {
+                self.allCollectionView.reloadData()
+                self.favoriteCollectionView.reloadData()
+                self.isLoaded = true
+            }
+        }
     }
 }
