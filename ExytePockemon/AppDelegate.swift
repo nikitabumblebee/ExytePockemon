@@ -13,32 +13,6 @@ import SwiftUI
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private(set) var pokemons: [Pokemon] = []
-        
-    private func loadData() {
-        let pokemonHelper = PokemonHelper()
-        let group = DispatchGroup()
-        group.enter()
-        DispatchQueue.global(qos: .utility).async {
-            let pokemonCount = pokemonHelper.getPokemonCount()
-            let pokemonEntity = DBManager.shared().loadData(entityName: "PokemonList")
-            if pokemonEntity.count > 0 {
-                self.pokemons = pokemonHelper.getConvertedManagedObjectsToPokemons(objects: pokemonEntity)
-                
-                // TODO: Add pokemon count check
-//                let isAllPokemonsLoaded = pokemonHelper.checkAvailablePokemons(pokemonCount: pokemonCount)
-//                if isAllPokemonsLoaded {
-//                    print("All pokemons up to date")
-//                } else {
-//                    print("Not all pokemons loaded")
-//                }
-            } else {
-                self.pokemons = pokemonHelper.getAllPokemons(totalPokemonCount: pokemonCount)
-                print("Loaded pokemons: \(self.pokemons.count)")
-            }
-            group.leave()
-        }
-        group.wait()
-    }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -109,6 +83,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+    }
+}
+
+// MARK: Private methods
+extension AppDelegate {
+    private func loadData() {
+        let pokemonHelper = PokemonHelper()
+        let group = DispatchGroup()
+        group.enter()
+        DispatchQueue.global(qos: .utility).async {
+            let pokemonCount = pokemonHelper.getPokemonCount()
+            let pokemonEntity = DBManager.shared().loadData(entityName: "PokemonList")
+            if pokemonEntity.count > 0 {
+                self.pokemons = pokemonHelper.getConvertedManagedObjectsToPokemons(objects: pokemonEntity)
+                
+                // TODO: Add pokemon count check
+//                let isAllPokemonsLoaded = pokemonHelper.checkAvailablePokemons(pokemonCount: pokemonCount)
+//                if isAllPokemonsLoaded {
+//                    print("All pokemons up to date")
+//                } else {
+//                    print("Not all pokemons loaded")
+//                }
+            } else {
+                self.pokemons = pokemonHelper.getAllPokemons(totalPokemonCount: pokemonCount)
+                print("Loaded pokemons: \(self.pokemons.count)")
+            }
+            group.leave()
+        }
+        group.wait()
     }
 }
 
