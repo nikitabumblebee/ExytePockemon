@@ -34,6 +34,7 @@ class DBManager {
         do {
             dbEntities = try managedContext.fetch(fetchRequest)
             for data in dbEntities {
+                let id = data.value(forKey: "id") as! Int
                 let name = data.value(forKey: "name") as! String
                 let weight = data.value(forKey: "weight") as! Int
                 let height = data.value(forKey: "height") as! Int
@@ -44,7 +45,7 @@ class DBManager {
                 let frontImage = data.value(forKey: "frontImage") as! String
                 let backImage = data.value(forKey: "backImage") as! String
                 let isFavorite = data.value(forKey: "isFavorite") as! Bool
-                let pokemon = Pokemon(name: name, weight: weight, height: height, order: order, baseExperience: baseExperience, types: types, abilities: abilities, frontImage: frontImage, backImage: backImage, isFavorite: isFavorite)
+                let pokemon = Pokemon(id: id, name: name, weight: weight, height: height, order: order, baseExperience: baseExperience, types: types, abilities: abilities, frontImage: frontImage, backImage: backImage, isFavorite: isFavorite)
                 pokemons.append(pokemon)
             }
         } catch let error as NSError {
@@ -59,6 +60,7 @@ class DBManager {
         let managedContext = appDelegate.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: entityName, in: managedContext)!
         let pokemonObject = NSManagedObject(entity: entity, insertInto: managedContext)
+        pokemonObject.setValue(pokemon.id, forKey: "id")
         pokemonObject.setValue(pokemon.name, forKeyPath: "name")
         pokemonObject.setValue(pokemon.height, forKey: "height")
         pokemonObject.setValue(pokemon.weight, forKey: "weight")

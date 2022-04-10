@@ -71,7 +71,8 @@ class PokemonHelper {
     }
     
     private func buildPokemon(pokemonResult: PKMPokemon) -> Pokemon {
-        if let name = pokemonResult.name,
+        if let id = pokemonResult.id,
+           let name = pokemonResult.name,
            let weight = pokemonResult.weight,
            let height = pokemonResult.height,
            let order = pokemonResult.order,
@@ -92,10 +93,10 @@ class PokemonHelper {
                     abilities.append(abilityDescription)
                 }
             }
-            let pokemon = Pokemon(name: name, weight: weight, height: height, order: order, baseExperience: baseExperience, types: types, abilities: abilities, frontImage: frontImage, backImage: backImage, isFavorite: false)
+            let pokemon = Pokemon(id: id, name: name, weight: weight, height: height, order: order, baseExperience: baseExperience, types: types, abilities: abilities, frontImage: frontImage, backImage: backImage, isFavorite: false)
             return pokemon
         } else {
-            return Pokemon(name: "", weight: 0, height: 0, order: 0, baseExperience: 0, types: [""], abilities: [""], frontImage: "", backImage: "", isFavorite: false)
+            return Pokemon(id: 1, name: "", weight: 0, height: 0, order: 0, baseExperience: 0, types: [""], abilities: [""], frontImage: "", backImage: "", isFavorite: false)
         }
     }
 }

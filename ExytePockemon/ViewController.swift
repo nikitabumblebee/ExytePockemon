@@ -12,11 +12,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var contentScrollView: UIScrollView!
     @IBOutlet weak var allCollectionView: UICollectionView!
     @IBOutlet weak var favoriteCollectionView: UICollectionView!
-    @IBAction func navigationButton(_ sender: UIButton) {
-        
-    }
-    
-    private var isFavorite = false
     
     private var isLoaded = false
     
@@ -59,67 +54,36 @@ extension ViewController: UICollectionViewDelegate {
 extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.favoriteCollectionView {
-            print("Favorite count: \(self.pokemons.count)")
+            print("Favorite count: \(self.pokemons.filter{ $0.isFavorite }.count)")
             return self.pokemons.filter{ $0.isFavorite }.count
         } else {
             print("Total count: \(self.pokemons.count)")
             return self.pokemons.count
         }
-//        if isLoaded {
-//            if collectionView == self.favoriteCollectionView {
-//                return self.pokemons.filter{ $0.isFavorite }.count
-//            } else {
-//                return self.pokemons.count
-//            }
-//        } else {
-//            if collectionView == self.favoriteCollectionView {
-//                return 0
-//            } else {
-//                return 0
-//            }
-//        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == favoriteCollectionView {
-            let cell = favoriteCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
+        if collectionView == allCollectionView {
+            let cell = allCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
             cell.configureCell(viewModel: self.pokemons[indexPath.row])
-            
+            cell.navigateButton.tag = self.pokemons[indexPath.row].id
+            cell.navigateButton.addTarget(self, action: #selector(goDetail), for: .touchUpInside)
             return cell
-        }
-        else {
-            if isLoaded {
-                if collectionView == allCollectionView {
-                    let cell = allCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
-                    cell.configureCell(viewModel: self.pokemons[indexPath.row])
-                    cell.navigateButton.tag = indexPath.row
-                    cell.navigateButton.addTarget(self, action: #selector(goDetail), for: .touchUpInside)
-                    return cell
-                } else {
-                    let cell = favoriteCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
-                    cell.configureCell(viewModel: self.pokemons[indexPath.row])
-                    cell.navigateButton.tag = indexPath.row
-                    cell.navigateButton.addTarget(self, action: #selector(goDetail), for: .touchUpInside)
-                    return cell
-                }
-            }
-            else {
-                let cell = favoriteCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
-                cell.configureCell(viewModel: self.pokemons[indexPath.row])
-                cell.navigateButton.tag = indexPath.row
-                cell.navigateButton.addTarget(self, action: #selector(goDetail), for: .touchUpInside)
-                return cell
-            }
+        } else {
+            let cell = favoriteCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
+            cell.configureCell(viewModel: self.pokemons.filter{ $0.isFavorite }[indexPath.row])
+            cell.navigateButton.tag = self.pokemons.filter{ $0.isFavorite }[indexPath.row].id
+            cell.navigateButton.addTarget(self, action: #selector(goDetail), for: .touchUpInside)
+            return cell
         }
     }
     
     @objc func goDetail(sender: UIButton) {
-        let pokemon = self.pokemons[sender.tag]
-        self.navigationController?.pushViewController(SelectedPokemonDescriptionController(pokemon: pokemon), animated: true)
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
+        let pokemon = self.pokemons.first{ $0.id == sender.tag }
+        guard let existingPokemon = pokemon else {
+            return
+        }
+        self.navigationController?.pushViewController(SelectedPokemonDescriptionController(pokemon: existingPokemon), animated: true)
     }
 }
 
