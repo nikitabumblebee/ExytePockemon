@@ -21,11 +21,13 @@
       "size" : "29x29"
     },
     {
+      "filename" : "AppIcon-5.jpeg",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "40x40"
     },
     {
+      "filename" : "AppIcon-6.jpeg",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "40x40"
@@ -41,11 +43,13 @@
       "size" : "60x60"
     },
     {
+      "filename" : "AppIcon.jpeg",
       "idiom" : "ipad",
       "scale" : "1x",
       "size" : "20x20"
     },
     {
+      "filename" : "AppIcon-2.jpeg",
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "20x20"
@@ -61,11 +65,13 @@
       "size" : "29x29"
     },
     {
+      "filename" : "AppIcon-3.jpeg",
       "idiom" : "ipad",
       "scale" : "1x",
       "size" : "40x40"
     },
     {
+      "filename" : "AppIcon-4.jpeg",
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "40x40"
