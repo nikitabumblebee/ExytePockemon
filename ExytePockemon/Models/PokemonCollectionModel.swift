@@ -8,7 +8,10 @@
 import Foundation
 import UIKit
 
+/// Provides pokemon collection model
 class PokemonCollectionModel {
+    
+    /// Gets an array of `Pokemon`
     private(set) var pokemons: [Pokemon] = []
     
     init() {

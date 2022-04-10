@@ -14,7 +14,6 @@ class ParentControllerViewModel {
     /// Instance of `PokemonCollectionModel` model
     let pokemonsCollectionModel: PokemonCollectionModel
     
-    /// Initializes `ParentControllerViewModel`
     init() {
         self.pokemonsCollectionModel = PokemonCollectionModel()
     }

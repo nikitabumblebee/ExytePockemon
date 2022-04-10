@@ -13,12 +13,6 @@ class PokemonCellViewModel {
     /// Instance of `PokeminCell` model
     let pokemonModel: PokemonCell
     
-    /**
-     Initializes an instance of `PokemonCellViewModel`
-     
-     - Parameters:
-        - pokemon: `Pokemon` of cell
-     */
     init(pokemon: Pokemon) {
         self.pokemonModel = PokemonCell(pokemon: pokemon)
     }
