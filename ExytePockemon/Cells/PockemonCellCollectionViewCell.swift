@@ -43,6 +43,14 @@ class PockemonCellCollectionViewCell: UICollectionViewCell {
         photo.image = nil
     }
     
+    /**
+     Configure cell
+     
+     Calling this method will configure cell with pokemon
+     
+     - Parameters:
+        - pokemon: Selected `Pokemon` that shows in cell
+     */
     func configureCell(pokemon: Pokemon) {
         self.pokemonCellViewModel = PokemonCellViewModel(pokemon: pokemon)
         createCellRootLayer()

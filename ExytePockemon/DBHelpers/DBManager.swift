@@ -9,6 +9,7 @@ import Foundation
 import CoreData
 import UIKit
 
+/// Provides CoreData manager (singletone)
 class DBManager: DataBaseManagerProtocol {    
     
     private init() { }
