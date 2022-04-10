@@ -9,11 +9,44 @@ import Foundation
 import CoreData
 import UIKit
 
+/// Provides methods for CoreData database interaction
 protocol DataBaseManagerProtocol {
+    
+    /**
+     Update selected entity
+     
+     Calling this method is updates value by key for selected entity object
+     
+     - Parameters:
+        - entityName: Table name in CoreData database
+        - entity: Entity that should be updated
+        - value: New value
+        - forKey: Key that updates
+     */
     func updateEntity(entityName: String, entity: EntityProtocol, value: Any, forKey: String)
     
+    /**
+     Save entity
+     
+     Calling this method will save entity in selected table of CoreData database
+     
+     - Parameters:
+        - entityName: Table name in CoreData database
+        - entity: Entity that should be save
+        - keyValuePairs: Dictionary of entity fields
+     */
     func saveEntity(entityName: String, entity: EntityProtocol, keyValuePairs: [String: Any])
     
+    /**
+     Load data
+     
+     Calling this method loads an array of `NSManagedObject` of entity table
+     
+     - Parameters:
+        - entityName: Table name in CoreData database
+     
+     - Returns:Array of `NSManagedObject` of selected table
+     */
     func loadData(entityName: String) -> [NSManagedObject]
 }
 

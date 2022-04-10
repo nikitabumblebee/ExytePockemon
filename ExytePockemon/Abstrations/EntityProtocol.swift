@@ -7,6 +7,9 @@
 
 import Foundation
 
+/// Provides entity protocol for CoreData database
 protocol EntityProtocol {
+    
+    /// Gets or sets an ID of entity element
     var id: Int { get set }
 }
