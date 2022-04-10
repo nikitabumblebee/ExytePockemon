@@ -7,14 +7,27 @@
 
 import Foundation
 
+/// Provides `PockemonCellCollectionViewCell` view model
 class PokemonCellViewModel {
     
+    /// Instance of `PokeminCell` model
     let pokemonModel: PokemonCell
     
+    /**
+     Initializes an instance of `PokemonCellViewModel`
+     
+     - Parameters:
+        - pokemon: `Pokemon` of cell
+     */
     init(pokemon: Pokemon) {
         self.pokemonModel = PokemonCell(pokemon: pokemon)
     }
     
+    /**
+     Change status of pokemon
+     
+     Calling this method will change favorite status of pokemon
+     */
     func changeFavoriteStatus() {
         pokemonModel.changeFavoriteStatus()
     }
