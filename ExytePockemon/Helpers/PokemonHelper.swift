@@ -9,7 +9,19 @@ import Foundation
 import PokemonAPI
 import CoreData
 
+/// Provides helpers that interacts with PokemonAPI
 class PokemonHelper {
+    
+    /**
+     Converts array of `NSManagedObject` to `Pokemon` array
+     
+     Calling this method will convert array of CoreData's entity `NSManagedObject` to `Pokemon` array
+     
+     - Parameters:
+        - objects: An array of `NSManagedObject` of CoreData
+     
+     - Returns: An array of `Pokemon`
+     */
     func getConvertedManagedObjectsToPokemons(objects: [NSManagedObject]) -> [Pokemon] {
         var pokemons: [Pokemon] = []
         for data in objects {
@@ -30,6 +42,16 @@ class PokemonHelper {
         return pokemons
     }
     
+    /**
+     Get all available pokemons
+     
+     Calling this method will create an array of available pokemons
+     
+     - Parameters:
+        - totalPokemonCount: Count of pokemons in PokemonAPI
+     
+     - Returns: An array of `Pokemon`
+     */
     func getAllPokemons(totalPokemonCount: Int) -> [Pokemon] {
         var pokemons: [Pokemon] = []
         let group = DispatchGroup()
@@ -70,6 +92,7 @@ class PokemonHelper {
         return pokemons
     }
     
+    // TODO: Update background pokemon count check
     func checkAvailablePokemons(pokemonCount: Int) -> Bool {
         var availablePokemons: Int = 0
         let group = DispatchGroup()
@@ -98,6 +121,13 @@ class PokemonHelper {
         }
     }
     
+    /**
+     Get pokemon count from PokemonAPI
+     
+     Calling this method will find a count of pokemons
+     
+     - Returns: Pokemons count from PokemonAPI
+     */
     func getPokemonCount() -> Int {
         var pokemonCount = 0
         let group = DispatchGroup()
