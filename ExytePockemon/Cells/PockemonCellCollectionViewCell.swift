@@ -55,6 +55,12 @@ class PockemonCellCollectionViewCell: UICollectionViewCell {
         self.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
         self.layer.borderWidth = CGFloat(1)
         self.layer.cornerRadius = CGFloat(8)
+        self.favoriteStatusButton.layer.backgroundColor = UIColor.white.cgColor
+        self.favoriteStatusButton.tintColor = UIColor.white
+        self.favoriteStatusButton.layer.borderColor = UIColor.black.cgColor
+        self.favoriteStatusButton.layer.borderWidth = 1
+        self.favoriteStatusButton.layer.cornerRadius = 6
+        self.favoriteStatusButton.setTitleColor(UIColor.systemBlue, for: .normal)
         pockemonName.text = viewModel.name
         configureButton(favoriteStatusButton)
         let utility = Utility()

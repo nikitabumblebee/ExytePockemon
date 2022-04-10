@@ -21,7 +21,7 @@ class DBManager {
         return dbManager
     }()
     
-    func loadData(entityName: String) -> [Pokemon] {
+    func loadPokemonData(entityName: String) -> [Pokemon] {
         var pokemons: [Pokemon] = []
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return pokemons

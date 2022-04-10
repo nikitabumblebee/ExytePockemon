@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         group.enter()
         DispatchQueue.global(qos: .utility).async {
             let pokemonCount = pokemonHelper.getPokemonCount()
-            let pokemonEntity = DBManager.shared().loadData(entityName: "PokemonList")
+            let pokemonEntity = DBManager.shared().loadPokemonData(entityName: "PokemonList")
             if pokemonEntity.count > 0 {
                 self.pokemons = pokemonEntity
                 
@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if isActive {
             self.loadData()
         } else {
-            self.pokemons = DBManager.shared().loadData(entityName: "PokemonList")
+            self.pokemons = DBManager.shared().loadPokemonData(entityName: "PokemonList")
         }
         return true
     }
