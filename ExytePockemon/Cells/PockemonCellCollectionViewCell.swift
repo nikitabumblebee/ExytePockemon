@@ -17,11 +17,12 @@ class PockemonCellCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
         
-    private(set) var viewModel: Pokemon?
-    
+    private var isFavorite: Bool = false
+    private(set) var pokemonCellModel: PokemonCell?
+        
     @IBAction func changeStatusAction(_ sender: UIButton) {
-        self.viewModel?.isFavorite.toggle()
-        DBManager.shared().updateEntity(entityName: "PokemonList", pokemon: viewModel!)
+        pokemonCellModel?.changeFavoriteStatus()
+        isFavorite.toggle()
         configureButton(sender)
     }
 
@@ -42,29 +43,15 @@ class PockemonCellCollectionViewCell: UICollectionViewCell {
         photo.image = nil
     }
     
-    private func addConstraints() {
-        NSLayoutConstraint.activate([photo.widthAnchor.constraint(equalToConstant: 70),
-                                     photo.heightAnchor.constraint(equalToConstant: 70),
-                                     photo.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-                                     photo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-                                     photo.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -100)])
-    }
-
-    func configureCell(viewModel: Pokemon) {
-        self.viewModel = viewModel
-        self.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
-        self.layer.borderWidth = CGFloat(1)
-        self.layer.cornerRadius = CGFloat(8)
-        self.favoriteStatusButton.layer.backgroundColor = UIColor.white.cgColor
-        self.favoriteStatusButton.tintColor = UIColor.white
-        self.favoriteStatusButton.layer.borderColor = UIColor.black.cgColor
-        self.favoriteStatusButton.layer.borderWidth = 1
-        self.favoriteStatusButton.layer.cornerRadius = 6
-        self.favoriteStatusButton.setTitleColor(UIColor.systemBlue, for: .normal)
-        pockemonName.text = viewModel.name
+    func configureCell(pokemon: Pokemon) {
+        self.pokemonCellModel = PokemonCell(pokemon: pokemon)
+        createCellRootLayer()
+        createFavoriteStatusButton()
+        pockemonName.text = pokemon.name
+        isFavorite = pokemon.isFavorite
         configureButton(favoriteStatusButton)
         let utility = Utility()
-        utility.downloadImage(imagePath: viewModel.frontImage) { [weak self] image in
+        utility.downloadImage(imagePath: pokemon.frontImage) { [weak self] image in
             DispatchQueue.main.async {
                 self?.photo.image = image
             }
@@ -74,11 +61,34 @@ class PockemonCellCollectionViewCell: UICollectionViewCell {
 
 // MARK: Private methods
 extension PockemonCellCollectionViewCell {
+    private func createCellRootLayer() {
+        self.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
+        self.layer.borderWidth = CGFloat(1)
+        self.layer.cornerRadius = CGFloat(8)
+    }
+    
+    private func createFavoriteStatusButton() {
+        self.favoriteStatusButton.layer.backgroundColor = UIColor.white.cgColor
+        self.favoriteStatusButton.tintColor = UIColor.white
+        self.favoriteStatusButton.layer.borderColor = UIColor.black.cgColor
+        self.favoriteStatusButton.layer.borderWidth = 1
+        self.favoriteStatusButton.layer.cornerRadius = 6
+        self.favoriteStatusButton.setTitleColor(UIColor.systemBlue, for: .normal)
+    }
+    
     private func configureButton(_ sender: UIButton) {
         DispatchQueue.main.async {
-            let buttonTitle = self.viewModel!.isFavorite ? "DISLIKE" : "LIKE💙"
+            let buttonTitle = self.isFavorite ? "DISLIKE" : "LIKE💙"
             sender.setTitle(buttonTitle, for: .normal)
             sender.titleLabel?.adjustsFontSizeToFitWidth = true
         }
+    }
+    
+    private func addConstraints() {
+        NSLayoutConstraint.activate([photo.widthAnchor.constraint(equalToConstant: 70),
+                                     photo.heightAnchor.constraint(equalToConstant: 70),
+                                     photo.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+                                     photo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+                                     photo.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -100)])
     }
 }
