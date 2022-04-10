@@ -59,22 +59,11 @@ class PockemonCellCollectionViewCell: UICollectionViewCell {
         self.layer.cornerRadius = CGFloat(8)
         pockemonName.text = viewModel.name
         favoriteStatusButton.titleLabel?.text = viewModel.isFavorite ? "DISLIKE" : "LIKE"
-        downloadImage(imagePath: viewModel.frontImage) { [weak self] image in
+        let utility = Utility()
+        utility.downloadImage(imagePath: viewModel.frontImage) { [weak self] image in
             DispatchQueue.main.async {
                 self?.photo.image = image
             }
         }
-    }
-    
-    private func downloadImage(imagePath: String = "https://www.forksoverknives.com/wp-content/uploads/fly-images/159962/Middle-Eastern-Pita-Pocket-Sandwiches-wordpress-360x270-c.jpg", completion: ((UIImage?) -> Void)?) {
-        guard let url = URL(string: imagePath) else { return }
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
-            guard let data = data else { return }
-            DispatchQueue.main.async {
-                let image = UIImage(data: data)
-                completion?(image)
-            }
-        }
-        task.resume()
     }
 }

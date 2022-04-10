@@ -33,6 +33,13 @@ class SelectedPokemonDescriptionController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        configure()
+    }
+}
+
+// MARK: Private methods
+extension SelectedPokemonDescriptionController {
+    private func configure() {
         DispatchQueue.main.async {
             self.nameLabel.text = self.pokemon.name
             self.weightLabel.text = String(self.pokemon.weight)
@@ -45,40 +52,17 @@ class SelectedPokemonDescriptionController: UIViewController {
             for ability in self.pokemon.abilities {
                 self.abilitiesMultilineLabel.text?.append(contentsOf: "\(ability) \n")
             }
-            self.loadImage(imagePath: self.pokemon.frontImage) { [weak self] image in
+            let utility = Utility()
+            utility.downloadImage(imagePath: self.pokemon.frontImage) { [weak self] image in
                 DispatchQueue.main.async {
                     self?.frontImage.image = image
                 }
             }
-            self.loadImage(imagePath: self.pokemon.backImage) { [weak self] image in
+            utility.downloadImage(imagePath: self.pokemon.backImage) { [weak self] image in
                 DispatchQueue.main.async {
                     self?.backImage.image = image
                 }
             }
         }
     }
-
-    private func loadImage(imagePath: String, completion: ((UIImage?) -> Void)?) {
-        guard let url = URL(string: imagePath) else { return }
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
-            guard let data = data else { return }
-            DispatchQueue.main.async {
-                let image = UIImage(data: data)
-                completion?(image)
-            }
-        }
-        task.resume()
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
