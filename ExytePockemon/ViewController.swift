@@ -12,9 +12,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var contentScrollView: UIScrollView!
     @IBOutlet weak var allCollectionView: UICollectionView!
     @IBOutlet weak var favoriteCollectionView: UICollectionView!
-    
-    private var isLoaded = false
-    
+        
     private var pokemons: [Pokemon] = []
     
     override func viewDidLoad() {
@@ -47,18 +45,16 @@ extension ViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == allCollectionView {
-            let cell = allCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
+            var cell = allCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
             cell.configureCell(viewModel: self.pokemons[indexPath.row])
             cell.navigateButton.tag = self.pokemons[indexPath.row].id
-            cell.navigateButton.addTarget(self, action: #selector(goDetail), for: .touchUpInside)
-            cell.favoriteStatusButton.addTarget(self, action: #selector(changeStatusAction), for: .touchUpInside)
+            cell = createPokemonCell(cell: cell)
             return cell
         } else {
-            let cell = favoriteCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
+            var cell = favoriteCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
             cell.configureCell(viewModel: self.pokemons.filter{ $0.isFavorite }[indexPath.row])
             cell.navigateButton.tag = self.pokemons.filter{ $0.isFavorite }[indexPath.row].id
-            cell.navigateButton.addTarget(self, action: #selector(goDetail), for: .touchUpInside)
-            cell.favoriteStatusButton.addTarget(self, action: #selector(changeStatusAction), for: .touchUpInside)
+            cell = createPokemonCell(cell: cell)
             return cell
         }
     }
@@ -92,8 +88,13 @@ extension ViewController {
             DispatchQueue.main.async {
                 self.allCollectionView.reloadData()
                 self.favoriteCollectionView.reloadData()
-                self.isLoaded = true
             }
         }
+    }
+    
+    private func createPokemonCell(cell: PockemonCellCollectionViewCell) -> PockemonCellCollectionViewCell {
+        cell.navigateButton.addTarget(self, action: #selector(goDetail), for: .touchUpInside)
+        cell.favoriteStatusButton.addTarget(self, action: #selector(changeStatusAction), for: .touchUpInside)
+        return cell
     }
 }

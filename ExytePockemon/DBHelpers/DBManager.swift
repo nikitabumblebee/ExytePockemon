@@ -22,7 +22,6 @@ class DBManager {
     }()
     
     func loadData(entityName: String) -> [Pokemon] {
-        var dbEntities: [NSManagedObject] = []
         var pokemons: [Pokemon] = []
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return pokemons
@@ -32,7 +31,7 @@ class DBManager {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
         
         do {
-            dbEntities = try managedContext.fetch(fetchRequest)
+            let dbEntities = try managedContext.fetch(fetchRequest)
             for data in dbEntities {
                 let id = data.value(forKey: "id") as! Int
                 let name = data.value(forKey: "name") as! String
