@@ -29,6 +29,8 @@
 		5E278FFF2802C7E80052EA64 /* ParentControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E278FFE2802C7E80052EA64 /* ParentControllerViewModel.swift */; };
 		5E2790022802D1BB0052EA64 /* DataBaseManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2790012802D1BB0052EA64 /* DataBaseManagerProtocol.swift */; };
 		5E2790042802D26C0052EA64 /* EntityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2790032802D26C0052EA64 /* EntityProtocol.swift */; };
+		5E2790062802DF7C0052EA64 /* PokemonCollectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2790052802DF7C0052EA64 /* PokemonCollectionModel.swift */; };
+		5E2790082802E00D0052EA64 /* PokemonCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2790072802E00D0052EA64 /* PokemonCellViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +57,8 @@
 		5E278FFE2802C7E80052EA64 /* ParentControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentControllerViewModel.swift; sourceTree = "<group>"; };
 		5E2790012802D1BB0052EA64 /* DataBaseManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseManagerProtocol.swift; sourceTree = "<group>"; };
 		5E2790032802D26C0052EA64 /* EntityProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityProtocol.swift; sourceTree = "<group>"; };
+		5E2790052802DF7C0052EA64 /* PokemonCollectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonCollectionModel.swift; sourceTree = "<group>"; };
+		5E2790072802E00D0052EA64 /* PokemonCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonCellViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				5E278FFB2802C3320052EA64 /* PokemonCell.swift */,
+				5E2790052802DF7C0052EA64 /* PokemonCollectionModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -173,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				5E278FFE2802C7E80052EA64 /* ParentControllerViewModel.swift */,
+				5E2790072802E00D0052EA64 /* PokemonCellViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -269,7 +275,9 @@
 				5E278FBA27FFD44D0052EA64 /* NetworkManager.swift in Sources */,
 				5E278FE828014A710052EA64 /* PokemonHelper.swift in Sources */,
 				5E278FFC2802C3320052EA64 /* PokemonCell.swift in Sources */,
+				5E2790062802DF7C0052EA64 /* PokemonCollectionModel.swift in Sources */,
 				5E278FE528012F030052EA64 /* DBManager.swift in Sources */,
+				5E2790082802E00D0052EA64 /* PokemonCellViewModel.swift in Sources */,
 				5E2790022802D1BB0052EA64 /* DataBaseManagerProtocol.swift in Sources */,
 				5E278FDF280126B00052EA64 /* InternetReachability.swift in Sources */,
 				5E278FFF2802C7E80052EA64 /* ParentControllerViewModel.swift in Sources */,

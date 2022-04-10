@@ -8,7 +8,7 @@
 import Foundation
 
 class PokemonCell {
-    private(set) var pokemon: Pokemon
+    let pokemon: Pokemon
     
     init(pokemon: Pokemon) {
         self.pokemon = pokemon

@@ -18,10 +18,10 @@ class PockemonCellCollectionViewCell: UICollectionViewCell {
     }()
         
     private var isFavorite: Bool = false
-    private(set) var pokemonCellModel: PokemonCell?
-        
+    private(set) var pokemonCellViewModel: PokemonCellViewModel?
+            
     @IBAction func changeStatusAction(_ sender: UIButton) {
-        pokemonCellModel?.changeFavoriteStatus()
+        pokemonCellViewModel?.changeFavoriteStatus()
         isFavorite.toggle()
         configureButton(sender)
     }
@@ -44,7 +44,7 @@ class PockemonCellCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCell(pokemon: Pokemon) {
-        self.pokemonCellModel = PokemonCell(pokemon: pokemon)
+        self.pokemonCellViewModel = PokemonCellViewModel(pokemon: pokemon)
         createCellRootLayer()
         createFavoriteStatusButton()
         pockemonName.text = pokemon.name
