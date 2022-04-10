@@ -10,45 +10,63 @@ import PokemonAPI
 import CoreData
 
 class PokemonHelper {
-    public private(set) var pokemons: [Pokemon] = []
-    
-    public private(set) var isReady = false
-    
-    private(set) var isChecked = false
-    
-    public private(set) var totalPokemonCount: Int = 0
-    
-    private(set) var apiPokemonCounter = 0
-    
-    public func getAllPokemons(totalPokemonCount: Int) {
+    public func getAllPokemons(totalPokemonCount: Int) -> [Pokemon] {
+        var pokemons: [Pokemon] = []
+        let group = DispatchGroup()
+        group.enter()
         DispatchQueue.global(qos: .utility).async {
-            var iteration = 0
-            let downloadGroup = DispatchGroup()
             for i in 0...totalPokemonCount {
-                downloadGroup.enter()
                 PokemonAPI().pokemonService.fetchPokemon(i) { result in
                     switch result {
                     case .success(let pokemonResult):
-                        iteration += 1
-                        downloadGroup.leave()
                         let pokemon = self.buildPokemon(pokemonResult: pokemonResult)
-                        self.pokemons.append(pokemon)
-                        print("Get items \(self.pokemons.count)")
+                        pokemons.append(pokemon)
+                        print("Get items \(pokemons.count)")
                         DBManager.shared().saveEntity(entityName: "PokemonList", pokemon: pokemon)
                     case .failure(let error):
-                        iteration += 1
                         print(error.localizedDescription)
                     }
-                    if iteration == totalPokemonCount {
-                        self.isReady = true
+                    if i == totalPokemonCount {
+                        group.leave()
+                        UserDefaults.standard.set(pokemons.count, forKey: "AvailablePokemons")
                     }
                 }
             }
-            downloadGroup.wait()
+        }
+        group.wait()
+        return pokemons
+    }
+    
+    func checkAvailablePokemons(pokemonCount: Int) -> Bool {
+        var availablePokemons: Int = 0
+        let group = DispatchGroup()
+        group.enter()
+        DispatchQueue.global(qos: .background).async {
+            for i in 0...pokemonCount {
+                PokemonAPI().pokemonService.fetchPokemon(i) { result in
+                    switch result {
+                    case .success(_):
+                        availablePokemons += 1
+                        print("Get items \(availablePokemons)")
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                    if i == pokemonCount {
+                        group.leave()
+                    }
+                }
+            }
+        }
+        group.wait()
+        if availablePokemons == UserDefaults.standard.integer(forKey: "AvailablePokemons") {
+            return true
+        } else {
+            return false
         }
     }
     
     public func getPokemonCount() -> Int {
+        var pokemonCount = 0
         let group = DispatchGroup()
         group.enter()
         
@@ -57,11 +75,11 @@ class PokemonHelper {
                 switch result {
                 case .success(let pokemonResult):
                     if let totalPokemonCount = pokemonResult.count {
-                        self.totalPokemonCount = totalPokemonCount
+                        pokemonCount = totalPokemonCount
                     } else {
-                        self.totalPokemonCount = 0
+                        pokemonCount = 0
                     }
-                    print("Success \(self.totalPokemonCount)")
+                    print("Success \(pokemonCount)")
                     group.leave()
                     break
                 case .failure(let error):
@@ -72,7 +90,7 @@ class PokemonHelper {
         }
         group.wait()
 
-        return totalPokemonCount
+        return pokemonCount
     }
     
     private func buildPokemon(pokemonResult: PKMPokemon) -> Pokemon {

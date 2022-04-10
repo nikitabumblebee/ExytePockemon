@@ -13,24 +13,31 @@ import SwiftUI
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private(set) var pokemons: [Pokemon] = []
-    
-    private(set) var isLoaded = false
-    
+        
     private func loadData() {
         let pokemonHelper = PokemonHelper()
+        let group = DispatchGroup()
+        group.enter()
         DispatchQueue.global(qos: .utility).async {
+            let pokemonCount = pokemonHelper.getPokemonCount()
             let pokemonEntity = DBManager.shared().loadData(entityName: "PokemonList")
             if pokemonEntity.count > 0 {
                 self.pokemons = pokemonEntity
+                
+                // TODO: Add pokemon count check
+//                let isAllPokemonsLoaded = pokemonHelper.checkAvailablePokemons(pokemonCount: pokemonCount)
+//                if isAllPokemonsLoaded {
+//                    print("All pokemons up to date")
+//                } else {
+//                    print("Not all pokemons loaded")
+//                }
             } else {
-                let pokemonCount = pokemonHelper.getPokemonCount()
-                pokemonHelper.getAllPokemons(totalPokemonCount: pokemonCount)
-                while pokemonHelper.isReady == false {
-                    self.pokemons = pokemonHelper.pokemons
-                }
+                self.pokemons = pokemonHelper.getAllPokemons(totalPokemonCount: pokemonCount)
+                print("Loaded pokemons: \(self.pokemons.count)")
             }
-            self.isLoaded = true
+            group.leave()
         }
+        group.wait()
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -40,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if isActive {
             self.loadData()
         } else {
-            
+            self.pokemons = DBManager.shared().loadData(entityName: "PokemonList")
         }
         return true
     }

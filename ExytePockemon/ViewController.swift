@@ -88,9 +88,6 @@ extension ViewController {
     private func loadData() {
         DispatchQueue.global(qos: .utility).async {
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            while self.isLoaded == false {
-                self.isLoaded = appDelegate.isLoaded
-            }
             self.pokemons = appDelegate.pokemons
             DispatchQueue.main.async {
                 self.allCollectionView.reloadData()
