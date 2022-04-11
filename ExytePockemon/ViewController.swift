@@ -16,15 +16,34 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         pokemonCollection.register(UINib(nibName: String(describing: PockemonCellCollectionViewCell.self), bundle: nil), forCellWithReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self))
         pokemonCollection.register(UINib(nibName: String(describing: HeaderSupplementaryView.self), bundle: nil), forSupplementaryViewOfKind: "UICollectionElementKindSectionHeader", withReuseIdentifier: String(describing: HeaderSupplementaryView.reuseId))
         
         pokemonCollection.delegate = self
         pokemonCollection.dataSource = self
-
-        self.pokemonCollection.reloadData()
+        YourApi(page1: 0)
     }
+    
+    func YourApi(page1: Int) {
+        let mypage = String(page1)
+        let request: String = String.init(format:"apiName/%@", mypage)
+        print(request)
+    }
+    
+//    var page: Int = 0
+//    var isPageRefreshing:Bool = false
+//    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if(self.pokemonCollection.contentOffset.y >= (self.pokemonCollection.contentSize.height - self.pokemonCollection.bounds.size.height)) {
+//            if !isPageRefreshing {
+//                isPageRefreshing = true
+//                print(page)
+//                page = page + 1
+//                YourApi(page1: page)
+//            }
+//        }
+//    }
 }
 
 extension ViewController: UICollectionViewDelegate {
