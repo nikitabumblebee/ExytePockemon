@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MSection {
+class Section {
     let title: String
     var items: [Pokemon]
     

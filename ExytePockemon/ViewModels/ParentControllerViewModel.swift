@@ -65,12 +65,12 @@ class ParentControllerViewModel {
         return pokemonsCollectionModel.pokemons.filter { $0.isFavorite }.count > 0 ? false : true
     }
     
-    var collectionSections: [MSection] {
+    var collectionSections: [Section] {
         if getFavoritePokemons().count == 0 {
-            return [MSection(title: "All", items: getUnlikedPokemons())]
+            return [Section(title: "All", items: getUnlikedPokemons())]
         } else {
-            return [MSection(title: "Favorite", items: getFavoritePokemons()),
-                        MSection(title: "All", items: getUnlikedPokemons())]
+            return [Section(title: "Favorite", items: getFavoritePokemons()),
+                        Section(title: "All", items: getUnlikedPokemons())]
         }
     }
 }
