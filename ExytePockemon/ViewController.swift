@@ -23,37 +23,7 @@ class ViewController: UIViewController {
         pokemonCollection.delegate = self
         pokemonCollection.dataSource = self
 
-        checkSections()
         self.pokemonCollection.reloadData()
-    }
-    
-    var collectionView: UICollectionView!
-    
-    var sections: [MSection]?
-    
-    func createCompositionalLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
-            let section = self.sections![sectionIndex]
-            
-            return self.createActiveChatSection()
-        }
-        
-        return layout
-    }
-    
-    func createActiveChatSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(86))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 0, bottom: 8, trailing: 0)
-                
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .estimated(1))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets.init(top: 66, leading: 20, bottom: 0, trailing: 20)
-        
-        return section
     }
 }
 
@@ -66,7 +36,7 @@ extension ViewController: UICollectionViewDataSource {
         guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderSupplementaryView.reuseId, for: indexPath) as? HeaderSupplementaryView else {
             return HeaderSupplementaryView()
         }
-        headerView.titleLabel.text = sections![indexPath.section].title
+        headerView.titleLabel.text = viewModel.collectionSections[indexPath.section].title
         return headerView
     }
     
@@ -75,12 +45,12 @@ extension ViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sections![section].items.count
+        return viewModel.collectionSections[section].items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PockemonCellCollectionViewCell.reuseId, for: indexPath) as! PockemonCellCollectionViewCell
-        let section = sections![indexPath.section]
+        let section = viewModel.collectionSections[indexPath.section]
         let item = section.items[indexPath.item]
         cell.navigateButton.tag = item.id
         cell.navigateButton.addTarget(self, action: #selector(goDetail), for: .touchUpInside)
@@ -90,11 +60,10 @@ extension ViewController: UICollectionViewDataSource {
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return sections!.count
+        return viewModel.collectionSections.count
     }
     
     @objc func changeStatusAction(sender: UIButton) {
-        checkSections()
         self.pokemonCollection.reloadData()
     }
     
@@ -115,15 +84,6 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: Private functions
 extension ViewController {
-    private func checkSections() {
-        if viewModel.getFavoritePokemons().count == 0 {
-            sections = [MSection(title: "All", items: viewModel.getUnlikedPokemons())]
-        } else {
-            sections = [MSection(title: "Favorite", items: viewModel.getFavoritePokemons()),
-                        MSection(title: "All", items: viewModel.getUnlikedPokemons())]
-        }
-    }
-    
     private func createPokemonCell(cell: PockemonCellCollectionViewCell, pokemon: Pokemon) -> PockemonCellCollectionViewCell {
         cell.configureCell(pokemon: pokemon)
         cell.navigateButton.tag = pokemon.id

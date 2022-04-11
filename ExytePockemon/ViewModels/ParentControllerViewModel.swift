@@ -64,4 +64,13 @@ class ParentControllerViewModel {
     func setFavoriteHidden() -> Bool {
         return pokemonsCollectionModel.pokemons.filter { $0.isFavorite }.count > 0 ? false : true
     }
+    
+    var collectionSections: [MSection] {
+        if getFavoritePokemons().count == 0 {
+            return [MSection(title: "All", items: getUnlikedPokemons())]
+        } else {
+            return [MSection(title: "Favorite", items: getFavoritePokemons()),
+                        MSection(title: "All", items: getUnlikedPokemons())]
+        }
+    }
 }
