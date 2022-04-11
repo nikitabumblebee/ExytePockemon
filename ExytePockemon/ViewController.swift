@@ -14,6 +14,10 @@ class ViewController: UIViewController {
     
     let viewModel = ParentControllerViewModel()
     
+    let PAGE_ITEMS = 10
+    
+    var page: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,28 +26,14 @@ class ViewController: UIViewController {
         
         pokemonCollection.delegate = self
         pokemonCollection.dataSource = self
-        YourApi(page1: 0)
     }
     
-    func YourApi(page1: Int) {
-        let mypage = String(page1)
-        let request: String = String.init(format:"apiName/%@", mypage)
-        print(request)
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if(self.pokemonCollection.contentOffset.y >= (self.pokemonCollection.contentSize.height - self.pokemonCollection.bounds.size.height)) {
+            page = page + 1
+            pokemonCollection.reloadData()
+        }
     }
-    
-//    var page: Int = 0
-//    var isPageRefreshing:Bool = false
-//    
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if(self.pokemonCollection.contentOffset.y >= (self.pokemonCollection.contentSize.height - self.pokemonCollection.bounds.size.height)) {
-//            if !isPageRefreshing {
-//                isPageRefreshing = true
-//                print(page)
-//                page = page + 1
-//                YourApi(page1: page)
-//            }
-//        }
-//    }
 }
 
 extension ViewController: UICollectionViewDelegate {
@@ -64,7 +54,13 @@ extension ViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.collectionSections[section].items.count
+        let totalItemsInCollectionSection = viewModel.collectionSections[section].items.count
+        let itemsToShow = page * PAGE_ITEMS
+        if totalItemsInCollectionSection < PAGE_ITEMS || itemsToShow > totalItemsInCollectionSection {
+            return viewModel.collectionSections[section].items.count
+        } else {
+            return PAGE_ITEMS * page
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
