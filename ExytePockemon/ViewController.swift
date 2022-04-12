@@ -9,25 +9,25 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var favoriteLabel: UILabel!
-    @IBOutlet weak var contentScrollView: UIScrollView!
-    @IBOutlet weak var allCollectionView: UICollectionView!
-    @IBOutlet weak var favoriteCollectionView: UICollectionView!
+    @IBOutlet weak var pokemonCollection: UICollectionView!
     
     let viewModel = ParentControllerViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        favoriteCollectionView.delegate = self
-        favoriteCollectionView.dataSource = self
-        favoriteCollectionView.register(UINib(nibName: String(describing: PockemonCellCollectionViewCell.self), bundle: nil), forCellWithReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self))
+        pokemonCollection.register(UINib(nibName: String(describing: PockemonCellCollectionViewCell.self), bundle: nil), forCellWithReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self))
+        pokemonCollection.register(UINib(nibName: String(describing: HeaderSupplementaryView.self), bundle: nil), forSupplementaryViewOfKind: "UICollectionElementKindSectionHeader", withReuseIdentifier: String(describing: HeaderSupplementaryView.reuseId))
         
-        allCollectionView.delegate = self
-        allCollectionView.dataSource = self
-        allCollectionView.register(UINib(nibName: String(describing: PockemonCellCollectionViewCell.self), bundle: nil), forCellWithReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self))
-        
-        loadData()
+        pokemonCollection.delegate = self
+        pokemonCollection.dataSource = self
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if(self.pokemonCollection.contentOffset.y >= (self.pokemonCollection.contentSize.height - self.pokemonCollection.bounds.size.height)) {
+            viewModel.incrementPageCount()
+            pokemonCollection.reloadData()
+        }
     }
 }
 
@@ -36,27 +36,39 @@ extension ViewController: UICollectionViewDelegate {
 }
 
 extension ViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == self.favoriteCollectionView {
-            favoriteCollectionView.isHidden = self.viewModel.setFavoriteHidden()
-            favoriteLabel.isHidden = self.viewModel.setFavoriteHidden()
-            return self.viewModel.getFavoritePokemons().count
-        } else {
-            return self.viewModel.getUnlikedPokemons().count
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderSupplementaryView.reuseId, for: indexPath) as? HeaderSupplementaryView else {
+            return HeaderSupplementaryView()
         }
+        headerView.titleLabel.text = viewModel.collectionSections[indexPath.section].title
+        return headerView
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: 200, height: 40)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.getVisibleItemsInSection(section: section)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == allCollectionView {
-            return buildAllCollectionCell(indexPath: indexPath)
-        } else {
-            return buildFavoriteCell(indexPath: indexPath)
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PockemonCellCollectionViewCell.reuseId, for: indexPath) as! PockemonCellCollectionViewCell
+        let section = viewModel.collectionSections[indexPath.section]
+        let item = section.items[indexPath.item]
+        cell.navigateButton.tag = item.id
+        cell.navigateButton.addTarget(self, action: #selector(goDetail), for: .touchUpInside)
+        cell.favoriteStatusButton.addTarget(self, action: #selector(changeStatusAction), for: .touchUpInside)
+        cell.configureCell(pokemon: item)
+        return cell
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return viewModel.collectionSections.count
     }
     
     @objc func changeStatusAction(sender: UIButton) {
-        self.favoriteCollectionView.reloadData()
-        self.allCollectionView.reloadData()
+        self.pokemonCollection.reloadData()
     }
     
     @objc func goDetail(sender: UIButton) {
@@ -70,38 +82,6 @@ extension ViewController: UICollectionViewDataSource {
 
 extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: favoriteCollectionView.frame.width / 2 - 10, height: favoriteCollectionView.frame.width / 2 - 10)
-    }
-}
-
-// MARK: Private functions
-extension ViewController {
-    private func loadData() {
-        DispatchQueue.main.async {
-            self.allCollectionView.reloadData()
-            self.favoriteCollectionView.reloadData()
-        }
-    }
-    
-    private func createPokemonCell(cell: PockemonCellCollectionViewCell, pokemon: Pokemon) -> PockemonCellCollectionViewCell {
-        cell.configureCell(pokemon: pokemon)
-        cell.navigateButton.tag = pokemon.id
-        cell.navigateButton.addTarget(self, action: #selector(goDetail), for: .touchUpInside)
-        cell.favoriteStatusButton.addTarget(self, action: #selector(changeStatusAction), for: .touchUpInside)
-        return cell
-    }
-    
-    private func buildAllCollectionCell(indexPath: IndexPath) -> PockemonCellCollectionViewCell {
-        var cell = allCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
-        let pokemon = self.viewModel.getUnlikedPokemons()[indexPath.row]
-        cell = createPokemonCell(cell: cell, pokemon: pokemon)
-        return cell
-    }
-    
-    private func buildFavoriteCell(indexPath: IndexPath) -> PockemonCellCollectionViewCell {
-        var cell = favoriteCollectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PockemonCellCollectionViewCell.self), for: indexPath) as! PockemonCellCollectionViewCell
-        let pokemon = self.viewModel.getFavoritePokemons()[indexPath.row]
-        cell = createPokemonCell(cell: cell, pokemon: pokemon)
-        return cell
+        return CGSize(width: pokemonCollection.frame.width / 2 - 10, height: pokemonCollection.frame.width / 2 - 10)
     }
 }

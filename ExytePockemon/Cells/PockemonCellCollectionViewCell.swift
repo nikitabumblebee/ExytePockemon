@@ -9,6 +9,8 @@ import UIKit
 
 class PockemonCellCollectionViewCell: UICollectionViewCell {
     
+    static var reuseId: String = "PockemonCellCollectionViewCell"
+    
     private let photo: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true

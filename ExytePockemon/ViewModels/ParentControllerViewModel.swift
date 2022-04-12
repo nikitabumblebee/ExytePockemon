@@ -11,8 +11,21 @@ import UIKit
 /// Proviedes `ViewController`'s view model
 class ParentControllerViewModel {
     
+    let PAGE_ITEMS = 10
+    
+    private(set) var page: Int = 0
+    
     /// Instance of `PokemonCollectionModel` model
     let pokemonsCollectionModel: PokemonCollectionModel
+    
+    var collectionSections: [Section] {
+        if getFavoritePokemons().count == 0 {
+            return [Section(title: "All", items: getUnlikedPokemons())]
+        } else {
+            return [Section(title: "Favorite", items: getFavoritePokemons()),
+                        Section(title: "All", items: getUnlikedPokemons())]
+        }
+    }
     
     init() {
         self.pokemonsCollectionModel = PokemonCollectionModel()
@@ -63,5 +76,19 @@ class ParentControllerViewModel {
      */
     func setFavoriteHidden() -> Bool {
         return pokemonsCollectionModel.pokemons.filter { $0.isFavorite }.count > 0 ? false : true
+    }
+    
+    func incrementPageCount() {
+        page = page + 1
+    }
+    
+    func getVisibleItemsInSection(section: Int) -> Int {
+        let totalItemsInCollectionSection = collectionSections[section].items.count
+        let itemsToShow = page * PAGE_ITEMS
+        if totalItemsInCollectionSection < PAGE_ITEMS || itemsToShow > totalItemsInCollectionSection || collectionSections[section].title == "Favorite" {
+            return totalItemsInCollectionSection
+        } else {
+            return PAGE_ITEMS * page
+        }
     }
 }
