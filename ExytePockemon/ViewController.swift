@@ -13,10 +13,6 @@ class ViewController: UIViewController {
     
     let viewModel = ParentControllerViewModel()
     
-    let PAGE_ITEMS = 10
-    
-    var page: Int = 0
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,7 +25,7 @@ class ViewController: UIViewController {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if(self.pokemonCollection.contentOffset.y >= (self.pokemonCollection.contentSize.height - self.pokemonCollection.bounds.size.height)) {
-            page = page + 1
+            viewModel.incrementPageCount()
             pokemonCollection.reloadData()
         }
     }
@@ -53,13 +49,7 @@ extension ViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let totalItemsInCollectionSection = viewModel.collectionSections[section].items.count
-        let itemsToShow = page * PAGE_ITEMS
-        if totalItemsInCollectionSection < PAGE_ITEMS || itemsToShow > totalItemsInCollectionSection {
-            return viewModel.collectionSections[section].items.count
-        } else {
-            return PAGE_ITEMS * page
-        }
+        return viewModel.getVisibleItemsInSection(section: section)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
