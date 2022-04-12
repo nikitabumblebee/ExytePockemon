@@ -85,14 +85,3 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: pokemonCollection.frame.width / 2 - 10, height: pokemonCollection.frame.width / 2 - 10)
     }
 }
-
-// MARK: Private functions
-extension ViewController {
-    private func createPokemonCell(cell: PockemonCellCollectionViewCell, pokemon: Pokemon) -> PockemonCellCollectionViewCell {
-        cell.configureCell(pokemon: pokemon)
-        cell.navigateButton.tag = pokemon.id
-        cell.navigateButton.addTarget(self, action: #selector(goDetail), for: .touchUpInside)
-        cell.favoriteStatusButton.addTarget(self, action: #selector(changeStatusAction), for: .touchUpInside)
-        return cell
-    }
-}
